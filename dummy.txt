@@ -1,0 +1,2 @@
+קובץ דמה לבדיקת commit ו־push.
+Dummy file for testing commit and push.
