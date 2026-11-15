@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+
+<html class="dark" dir="rtl" lang="he"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>FinAI | עוזר אישי וניהול זמינות (סוכן ג׳)</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS with plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "secondary-fixed": "#dae2fd",
+            "surface-tint": "#4edea3",
+            "outline": "#86948a",
+            "on-error": "#690005",
+            "outline-variant": "#3c4a42",
+            "primary-container": "#10b981",
+            "inverse-surface": "#dfe2ef",
+            "on-secondary-container": "#adb4ce",
+            "primary-fixed": "#6ffbbe",
+            "error": "#ffb4ab",
+            "surface-container-highest": "#31353f",
+            "secondary": "#bec6e0",
+            "on-secondary": "#283044",
+            "tertiary-fixed-dim": "#ffb95f",
+            "surface-bright": "#353943",
+            "on-surface-variant": "#bbcabf",
+            "tertiary-container": "#e29100",
+            "on-tertiary": "#472a00",
+            "primary-fixed-dim": "#4edea3",
+            "on-primary-fixed": "#002113",
+            "error-container": "#93000a",
+            "tertiary-fixed": "#ffddb8",
+            "on-background": "#dfe2ef",
+            "on-secondary-fixed": "#131b2e",
+            "surface-dim": "#0f131c",
+            "on-tertiary-container": "#523200",
+            "surface-container": "#1c1f29",
+            "on-primary": "#003824",
+            "surface-variant": "#31353f",
+            "on-surface": "#dfe2ef",
+            "secondary-container": "#3f465c",
+            "inverse-on-surface": "#2c303a",
+            "inverse-primary": "#006c49",
+            "on-secondary-fixed-variant": "#3f465c",
+            "surface-container-low": "#181b25",
+            "surface-container-high": "#262a34",
+            "on-primary-fixed-variant": "#005236",
+            "on-error-container": "#ffdad6",
+            "on-tertiary-fixed-variant": "#653e00",
+            "background": "#0f131c",
+            "primary": "#4edea3",
+            "surface-container-lowest": "#0a0e17",
+            "on-tertiary-fixed": "#2a1700",
+            "surface": "#0f131c",
+            "secondary-fixed-dim": "#bec6e0",
+            "on-primary-container": "#00422b",
+            "tertiary": "#ffb95f"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "space-xl": "2.25rem",
+            "margin-mobile": "1rem",
+            "margin": "2rem",
+            "space-xs": "0.25rem",
+            "gutter": "1.25rem",
+            "space-md": "1rem",
+            "gutter-mobile": "0.75rem",
+            "space-lg": "1.5rem",
+            "space-sm": "0.5rem"
+          },
+          "fontFamily": {
+            "numeric-metric": ["Rubik"],
+            "body-sm": ["Rubik"],
+            "label-md": ["Rubik"],
+            "label-sm": ["Rubik"],
+            "display": ["Rubik"],
+            "body-lg": ["Rubik"],
+            "title": ["Rubik"],
+            "headline-md": ["Rubik"],
+            "headline-lg": ["Rubik"],
+            "body-md": ["Rubik"]
+          },
+          "fontSize": {
+            "numeric-metric": ["28px", { "lineHeight": "32px", "fontWeight": "700" }],
+            "body-sm": ["12px", { "lineHeight": "18px", "fontWeight": "400" }],
+            "label-md": ["13px", { "lineHeight": "18px", "fontWeight": "500" }],
+            "label-sm": ["11px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+            "display": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "title": ["16px", { "lineHeight": "24px", "fontWeight": "600" }],
+            "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+            "headline-lg": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    body {
+      font-family: 'Rubik', sans-serif;
+      background-color: #0f131c;
+      color: #dfe2ef;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #181b25;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #3c4a42;
+      border-radius: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #4edea3;
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface antialiased min-h-screen flex flex-col selection:bg-primary-container selection:text-on-primary-container">
+<!-- 1. TOP ALERT / COMPLIANCE BANNER -->
+<aside aria-label="הודעת רגולציה ובטיחות פיננסית" class="w-full bg-surface-container-lowest border-b border-tertiary-container/30 px-margin py-1.5 flex items-center justify-between text-body-sm font-body-sm z-50">
+<div class="flex items-center gap-space-sm text-tertiary">
+<span class="material-symbols-outlined text-[16px] text-tertiary leading-none">warning</span>
+<span class="font-title font-semibold tracking-wide">כסף מדומה בלבד – סימולטור ללא סיכון אמיתי</span>
+<span class="text-outline-variant">|</span>
+<span class="text-on-surface-variant">סיום הניסוי: 01.01.2027</span>
+<span class="text-outline-variant">|</span>
+<span class="text-on-surface-variant">אין ביצוע פקודות בשוק האמיתי ואין גישה לחשבון בנק</span>
+</div>
+<div class="flex items-center gap-space-sm text-outline font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">verified_user</span>
+<span>פרוטוקול ISO-FIN-2026</span>
+</div>
+</aside>
+<!-- 2. HEADER BAR (Institutional Dashboard Header) -->
+<header class="w-full bg-surface-container border-b border-outline-variant flex flex-wrap items-center justify-between px-margin py-space-sm z-40 gap-space-md">
+<!-- Brand / Product Identity -->
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-lg bg-surface-container-high border border-primary/40 flex items-center justify-center text-primary shadow-sm">
+<span class="material-symbols-outlined text-[20px]">smart_toy</span>
+</div>
+<div>
+<h1 class="font-headline-md text-headline-md font-bold tracking-tight text-on-surface">FinAI <span class="text-primary font-normal">| ניהול השקעות מרובת סוכנים</span></h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant">שולחן בקרה וסוכן תיאום זמינות אישית</p>
+</div>
+</div>
+<!-- Agent Profile Tag -->
+<div class="hidden lg:flex items-center gap-1.5 px-space-sm py-1 bg-surface-container-high rounded-full border border-primary/20 text-primary font-label-sm text-label-sm">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+<span>סוכן ג׳: ניהול זמינות ופרופיל פעיל</span>
+</div>
+</div>
+<!-- Capital / Balances / Actions Telemetry -->
+<div class="flex items-center flex-wrap gap-space-md">
+<!-- Total Virtual Capital Pill -->
+<div class="bg-surface-container-low border border-outline-variant rounded-lg px-space-md py-1.5 flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary text-[18px]">account_balance_wallet</span>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant leading-none">הון כולל מדומה</span>
+<div class="flex items-baseline gap-1 mt-0.5">
+<span class="font-title text-title font-bold text-on-surface">₪31,420</span>
+<span class="font-label-sm text-label-sm text-primary font-semibold">(רווח ₪1,420+)</span>
+</div>
+</div>
+</div>
+<!-- Cash Reserves Balances -->
+<div class="hidden sm:flex items-center gap-space-md bg-surface-container-low border border-outline-variant rounded-lg px-space-md py-1.5 font-label-md text-label-md text-on-surface-variant">
+<div>
+<span>מזומן ₪:</span>
+<span class="text-on-surface font-semibold font-numeric-metric">₪6,240</span>
+</div>
+<span class="text-outline-variant">|</span>
+<div>
+<span>מזומן $:</span>
+<span class="text-on-surface font-semibold font-numeric-metric">$1,680</span>
+<span class="text-body-sm text-on-surface-variant">(3.71)</span>
+</div>
+</div>
+<!-- Quick Trailing Controls from JSON Anchors -->
+<div class="flex items-center gap-space-xs">
+<button class="p-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high rounded-lg transition-colors" title="התראות מערכת" type="button">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high rounded-lg transition-colors" title="יומן ספים וסיכונים" type="button">
+<span class="material-symbols-outlined text-[20px]">shield</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high rounded-lg transition-colors" title="כיול סוכנים" type="button">
+<span class="material-symbols-outlined text-[20px]">tune</span>
+</button>
+<div class="h-6 w-px bg-outline-variant mx-1"></div>
+<button class="bg-primary hover:bg-primary-fixed-dim text-on-primary-fixed font-title text-label-md px-space-md py-1.5 rounded-lg font-bold transition-all shadow-sm active:scale-[0.99] flex items-center gap-1.5" type="button">
+<span class="material-symbols-outlined text-[16px]">play_circle</span>
+<span>הפעלה מדומה</span>
+</button>
+</div>
+</div>
+</header>
+<!-- BODY WRAPPER: Fixed Right SideNav + Fluid Main Workspace -->
+<div class="flex flex-1 relative w-full overflow-hidden">
+<!-- 3. RIGHT SIDEBAR NAVIGATION (RTL Pinned, matching SideNavBar JSON) -->
+<nav aria-label="תפריט ניווט ראשי" class="w-64 flex-shrink-0 bg-surface-dim border-l border-outline-variant hidden md:flex flex-col justify-between p-space-md z-30">
+<!-- Top Section: System Header & Nav Items -->
+<div class="flex flex-col space-y-space-md">
+<!-- Sub-brand identifier -->
+<div class="flex items-center gap-space-sm px-space-xs pb-space-sm border-b border-outline-variant">
+<div class="w-8 h-8 rounded-lg bg-surface-container-high border border-outline-variant flex items-center justify-center text-primary font-bold text-headline-md font-headline-md">
+            ג׳
+          </div>
+<div>
+<div class="font-title text-title font-bold text-on-surface">FinAI אוטונומי</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">סימולטור השקעות מוסדי</div>
+</div>
+</div>
+<!-- Navigation Tabs -->
+<ul class="flex flex-col space-y-1">
+<!-- 1. דף הבית -->
+<li>
+<a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined text-[20px]">dashboard</span>
+<span>דף הבית</span>
+</a>
+</li>
+<!-- 2. המלצות -->
+<li>
+<a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined text-[20px]">smart_toy</span>
+<span>המלצות</span>
+</a>
+</li>
+<!-- 3. ביצוע מדומה -->
+<li>
+<a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined text-[20px]">candlestick_chart</span>
+<span>ביצוע מדומה</span>
+</a>
+</li>
+<!-- 4. החזקות ומעקב -->
+<li>
+<a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined text-[20px]">account_balance_wallet</span>
+<span>החזקות</span>
+</a>
+</li>
+<!-- 5. עוזר אישי (ACTIVE TAB - EXACT SPECIFICATION) -->
+<li>
+<a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg bg-surface-container-high text-primary font-title text-label-md border-r-2 border-primary shadow-sm" href="#">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">support_agent</span>
+<span class="font-bold">עוזר אישי</span>
+<span class="mr-auto inline-block w-2 h-2 rounded-full bg-primary"></span>
+</a>
+</li>
+<!-- 6. התראות והיסטוריה -->
+<li>
+<a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined text-[20px]">history</span>
+<span>התראות והיסטוריה</span>
+</a>
+</li>
+<!-- 7. דוחות -->
+<li>
+<a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined text-[20px]">assessment</span>
+<span>דוחות</span>
+</a>
+</li>
+<!-- 8. היכרות והגדרות -->
+<li>
+<a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+<span>היכרות והגדרות</span>
+</a>
+</li>
+</ul>
+</div>
+<!-- Bottom / Footer Diagnostic Navigation Links -->
+<div class="pt-space-md border-t border-outline-variant space-y-2">
+<div class="px-space-sm py-1.5 bg-surface-container-low rounded-lg border border-outline-variant text-body-sm text-body-sm flex items-center justify-between text-on-surface-variant">
+<span class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-primary">hub</span>
+            סטטוס סוכנים (א׳-ד׳)
+          </span>
+<span class="text-primary font-bold text-label-sm">4/4 תקין</span>
+</div>
+<a class="flex items-center gap-2 px-space-sm py-1.5 text-body-sm font-body-sm text-outline hover:text-on-surface rounded transition-colors" href="#">
+<span class="material-symbols-outlined text-[16px]">verified_user</span>
+<span>יומן ביקורת ניסוי v2.4</span>
+</a>
+</div>
+</nav>
+<!-- 4. MAIN CONTENT AREA (Bento Grid: Panel A & Panel B) -->
+<main class="flex-1 overflow-y-auto p-space-md lg:p-space-lg custom-scrollbar">
+<div class="max-w-[1600px] mx-auto space-y-space-lg">
+<!-- Page Title & Operational Status Strip -->
+<section class="flex flex-col md:flex-row md:items-center justify-between gap-space-md pb-space-sm border-b border-outline-variant">
+<div>
+<div class="flex items-center gap-space-sm">
+<h2 class="font-headline-lg text-headline-lg font-bold text-on-surface">עוזר אישי וסנכרון זמינות (סוכן ג׳)</h2>
+<span class="px-2 py-0.5 rounded text-label-sm font-label-sm bg-primary/10 text-primary border border-primary/30">מתאם אנושי-אוטונומי</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">
+              שליטה דינמית על שעות הפעילות, התאמת חלונות תגובה אלגוריתמיים וסריקת עמדות מנע טרום היעדרות.
+            </p>
+</div>
+<!-- Quick Absence Status Alert Pill -->
+<div class="flex items-center gap-space-sm bg-surface-container border border-outline-variant rounded-lg px-space-md py-2">
+<span class="relative flex h-3 w-3">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-3 w-3 bg-primary"></span>
+</span>
+<div class="text-right">
+<div class="font-title text-label-md text-on-surface font-bold">משתמש זמין כעת</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">חלון תגובה נוכחי: עד 60 דק׳</div>
+</div>
+</div>
+</section>
+<!-- Bento Layout: Panel A (Left/Center Chat) + Panel B (Right/Center Controls) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+<!-- ============================================== -->
+<!-- PANEL A: Conversational Assistant with Agent ג׳ -->
+<!-- ============================================== -->
+<section class="lg:col-span-6 bg-surface-container-low border border-outline-variant rounded-xl flex flex-col h-[740px] shadow-sm relative overflow-hidden">
+<!-- Panel Header -->
+<div class="bg-surface-container border-b border-outline-variant px-space-lg py-space-md flex items-center justify-between">
+<div class="flex items-center gap-space-md">
+<div class="relative">
+<div class="w-10 h-10 rounded-full bg-surface-container-high border border-primary text-primary flex items-center justify-center font-bold text-headline-md font-headline-md shadow-inner">
+                    ג׳
+                  </div>
+<span class="absolute bottom-0 right-0 w-3 h-3 bg-primary border-2 border-surface-container rounded-full"></span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<h3 class="font-title text-title font-bold text-on-surface">סוכן ג׳ · מתאם זמינות אישית ומדיניות סיכון</h3>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">מחובר ישירות לפרוטוקול ניהול פקודות התיק</p>
+</div>
+</div>
+<div class="flex items-center gap-1.5 px-2.5 py-1 bg-surface-container-high rounded border border-outline-variant text-label-sm font-label-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[14px] text-primary">chat_bubble</span>
+<span>שפה טבעית מובנית</span>
+</div>
+</div>
+<!-- Chat Stream / Message Feed -->
+<div class="flex-1 overflow-y-auto p-space-md space-y-space-md custom-scrollbar bg-surface-dim/40">
+<!-- System Context Notice -->
+<div class="text-center my-2">
+<span class="text-label-sm font-label-sm text-outline bg-surface-container px-space-md py-1 rounded-full border border-outline-variant">
+                  היסטוריית שיחה מעודכנת להיום, 10:45
+                </span>
+</div>
+<!-- 1. User Message (Right Aligned in RTL) -->
+<div class="flex flex-col items-start max-w-[85%] self-start">
+<div class="flex items-center gap-2 mb-1 px-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant font-medium">אתה</span>
+<span class="text-body-sm text-outline font-label-sm">10:45</span>
+</div>
+<div class="bg-surface-container-high text-on-surface border border-outline-variant rounded-2xl rounded-tr-none px-space-md py-space-sm font-body-md text-body-md shadow-sm">
+                  מחר אני בהרצאות בין 9 ל-13 ובערב לא זמין
+                </div>
+</div>
+<!-- 2. Agent ג׳ Response (Left/End Aligned in RTL) -->
+<div class="flex flex-col items-end max-w-[92%] self-end">
+<div class="flex items-center gap-2 mb-1 px-1">
+<span class="text-body-sm text-outline font-label-sm">10:45:12</span>
+<span class="font-label-sm text-label-sm text-primary font-bold">סוכן ג׳ (FinAI)</span>
+</div>
+<div class="bg-surface-container border border-outline-variant rounded-2xl rounded-tl-none p-space-md shadow-md space-y-space-md w-full">
+<p class="font-body-md text-body-md text-on-surface">
+                    הבנתי, ניתחתי את לוח הזמנים שלך ותרגמתי להגדרות מערכת מוגדרות:
+                  </p>
+<!-- Structured Interpretation Chips -->
+<div class="space-y-space-sm">
+<!-- Chip 1: Success / Parsed -->
+<div class="p-space-sm bg-surface-container-lowest border border-primary/30 rounded-lg flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-primary text-[18px] mt-0.5">check_circle</span>
+<div class="text-right">
+<div class="font-title text-body-md text-primary font-semibold">
+                          מחר 09:00–13:00 לא זמין (4 שעות הרצאות)
+                        </div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">
+                          פעולת מערכת: חסימת המלצות כניסה יזומות והשהיית איתותי מסחר רגילים.
+                        </div>
+</div>
+</div>
+<!-- Chip 2: Amber Clarification Needed -->
+<div class="p-space-sm bg-surface-container-lowest border border-tertiary/40 rounded-lg flex flex-col gap-2">
+<div class="flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-tertiary text-[18px] mt-0.5">help_outline</span>
+<div class="text-right">
+<div class="font-title text-body-md text-tertiary font-semibold">
+                            מחר ערב – לא ברור: החל מאיזו שעה בדיוק?
+                          </div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">
+                            כדי להימנע מחשיפת תיק ללא אישור, בחר שעת התחלה מוגדרת:
+                          </div>
+</div>
+</div>
+<!-- Interactive Inline Clarification Buttons -->
+<div class="flex flex-wrap gap-2 pt-1 pr-7">
+<button class="px-space-md py-1 bg-surface-container-high hover:bg-tertiary/20 hover:text-tertiary hover:border-tertiary text-on-surface border border-outline-variant rounded-md font-label-md text-label-md transition-colors" type="button">
+                          18:00
+                        </button>
+<button class="px-space-md py-1 bg-surface-container-high hover:bg-tertiary/20 hover:text-tertiary hover:border-tertiary text-on-surface border border-outline-variant rounded-md font-label-md text-label-md transition-colors" type="button">
+                          20:00
+                        </button>
+<button class="px-space-md py-1 bg-surface-container-high hover:bg-surface-bright text-on-surface-variant border border-outline-variant rounded-md font-label-md text-label-md transition-colors" type="button">
+                          אחר (הקלדה חופשית)
+                        </button>
+</div>
+</div>
+</div>
+<!-- Primary Confirmation Button in Message -->
+<div class="pt-2 border-t border-outline-variant/60 flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
+<button class="bg-primary hover:bg-primary-fixed-dim text-on-primary-fixed font-title text-label-md font-bold px-space-md py-2 rounded-lg flex items-center justify-center gap-2 transition-all active:scale-[0.98]" type="button">
+<span class="material-symbols-outlined text-[18px]">done_all</span>
+<span>אשר עדכון זמינות ליומן המערכת</span>
+</button>
+<span class="text-body-sm font-body-sm text-on-surface-variant">
+                      *עדכון זמני גובר על השגרה השבועית
+                    </span>
+</div>
+</div>
+</div>
+</div>
+<!-- Quick Action Floating Bar (Docked above input) -->
+<div class="px-space-md py-2 bg-surface-container border-t border-outline-variant flex flex-wrap items-center gap-2">
+<span class="font-label-sm text-label-sm text-outline ml-1">פעולות מהירות:</span>
+<button class="px-space-sm py-1 bg-surface-container-high hover:bg-surface-bright text-on-surface border border-outline-variant rounded text-label-sm font-label-sm flex items-center gap-1 transition-colors" type="button">
+<span class="material-symbols-outlined text-[14px]">timer</span>
+<span>לא זמין לשעה</span>
+<span class="bg-surface-container-lowest px-1 rounded text-[10px] text-tertiary border border-outline-variant">60 דק׳</span>
+</button>
+<button class="px-space-sm py-1 bg-surface-container-high hover:bg-surface-bright text-on-surface border border-outline-variant rounded text-label-sm font-label-sm flex items-center gap-1 transition-colors" type="button">
+<span class="material-symbols-outlined text-[14px]">event_busy</span>
+<span>לא זמין עד…</span>
+</button>
+<!-- Prominent "חזרתי" CTA -->
+<button class="px-space-md py-1 bg-primary text-on-primary-fixed hover:bg-primary-fixed-dim border border-primary rounded text-label-sm font-title font-bold flex items-center gap-1 transition-all shadow-sm active:scale-[0.97]" type="button">
+<span class="material-symbols-outlined text-[16px]">how_to_reg</span>
+<span>חזרתי (איפוס מיידי)</span>
+</button>
+<button class="px-space-sm py-1 bg-surface-container-low hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface border border-outline-variant rounded text-label-sm font-label-sm mr-auto flex items-center gap-1 transition-colors" type="button">
+<span class="material-symbols-outlined text-[14px]">analytics</span>
+<span>בדיקת מצב תיק כעת</span>
+</button>
+</div>
+<!-- Chat Input Bar -->
+<div class="p-space-md bg-surface-container-high border-t border-outline-variant">
+<form class="flex items-center gap-space-sm" onsubmit="event.preventDefault();">
+<button class="p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container rounded-lg transition-colors" title="הקלטה קולית בשפה טבעית" type="button">
+<span class="material-symbols-outlined text-[20px]">mic</span>
+</button>
+<input class="flex-1 bg-surface-dim border border-outline-variant rounded-lg px-space-md py-2.5 text-body-md font-body-md text-on-surface placeholder-outline focus:outline-none focus:border-primary transition-colors text-right" placeholder="הקלד עדכון זמינות חופשי (למשל: 'אני בפגישה עד 16:00' או 'שנה טווח')..." type="text"/>
+<button class="bg-primary hover:bg-primary-fixed-dim text-on-primary-fixed px-space-md py-2.5 rounded-lg flex items-center justify-center transition-all font-title font-bold" type="submit">
+<span class="material-symbols-outlined text-[20px]">send</span>
+</button>
+</form>
+</div>
+</section>
+<!-- ============================================================== -->
+<!-- PANEL B: Availability Control & Investment Safeguards (Agent ג׳) -->
+<!-- ============================================================== -->
+<div class="lg:col-span-6 space-y-space-md">
+<!-- 1. Current Status & Fast-Response Mode Card -->
+<section class="bg-surface-container-low border border-outline-variant rounded-xl p-space-lg space-y-space-md">
+<div class="flex items-start justify-between">
+<div>
+<div class="flex items-center gap-space-sm">
+<span class="w-3 h-3 rounded-full bg-primary animate-pulse"></span>
+<h3 class="font-headline-md text-headline-md font-bold text-on-surface">סטטוס נוכחי: זמין כעת</h3>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">
+                    חלון תגובה רגיל: <span class="text-on-surface font-semibold">עד שעה</span> (ברירת מחדל של הניסוי המוסדי).
+                  </p>
+</div>
+<!-- Mode Switch Toggle -->
+<div class="flex items-center gap-2 bg-surface-container px-3 py-1.5 rounded-lg border border-outline-variant">
+<span class="text-label-sm font-label-sm text-on-surface-variant">מצב מהיר</span>
+<!-- RTL Switch: Active toggles towards right -->
+<button aria-checked="true" class="w-10 h-6 bg-primary rounded-full relative flex items-center p-0.5 transition-colors" role="switch" type="button">
+<span class="w-5 h-5 bg-on-primary-fixed rounded-full shadow-sm transform transition-transform translate-x-0"></span>
+</button>
+</div>
+</div>
+<!-- Duration Selector Chips -->
+<div class="space-y-space-xs pt-1">
+<label class="font-label-sm text-label-sm text-on-surface-variant">הגדרת חלון תגובה מהיר (Fast-Response Mode):</label>
+<div class="grid grid-cols-3 gap-space-sm">
+<button class="py-2 px-space-sm rounded-lg border border-outline-variant bg-surface-container hover:bg-surface-container-high text-body-md font-body-md text-on-surface text-center transition-colors" type="button">
+                    30 דקות
+                  </button>
+<button class="py-2 px-space-sm rounded-lg border-2 border-primary bg-primary/10 text-primary text-body-md font-title font-bold text-center transition-colors" type="button">
+                    שעה אחת (נבחר)
+                  </button>
+<button class="py-2 px-space-sm rounded-lg border border-outline-variant bg-surface-container hover:bg-surface-container-high text-body-md font-body-md text-on-surface text-center transition-colors" type="button">
+                    שעתיים
+                  </button>
+</div>
+</div>
+<!-- Compliance Footnote -->
+<div class="p-space-sm bg-surface-dim/60 rounded border border-outline-variant/60 flex items-start gap-2">
+<span class="material-symbols-outlined text-[16px] text-outline mt-0.5">info</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                  בתום החלון המוגדר חוזרים אוטומטית לברירת המחדל (עד שעה). הפעלת החלון המהיר מאפשרת בחינת הזדמנויות בלבד ואינה מחייבת המלצה או פעולה.
+                </p>
+</div>
+</section>
+<!-- 2. Weekly Routine Grid (א׳ עד ש׳) -->
+<section class="bg-surface-container-low border border-outline-variant rounded-xl p-space-lg space-y-space-md">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
+<div>
+<h3 class="font-title text-title font-bold text-on-surface">שגרה שבועית חוזרת</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">בדיקת שינויים שבועית קצרה לסנכרון שעות העבודה</p>
+</div>
+<span class="px-space-md py-1 bg-surface-container border border-outline-variant rounded-full text-label-sm font-label-sm text-primary">
+                  כ-14 שעות זמינות ביום (הערכה)
+                </span>
+</div>
+<!-- Mini Matrix Visualizer -->
+<div class="space-y-2 pt-2">
+<!-- Time Slot Headers -->
+<div class="grid grid-cols-8 text-center text-label-sm font-label-sm text-outline border-b border-outline-variant pb-1">
+<div>יום</div>
+<div>בוקר (08-12)</div>
+<div class="col-span-2">צהריים (12-17)</div>
+<div class="col-span-2">ערב (17-22)</div>
+<div class="col-span-2">לילה (22-08)</div>
+</div>
+<!-- Days Rows -->
+<!-- יום א׳ -->
+<div class="grid grid-cols-8 items-center text-center font-label-md text-label-md gap-1">
+<div class="font-bold text-on-surface">א׳</div>
+<div class="h-6 bg-primary/20 border border-primary/40 rounded flex items-center justify-center text-primary text-[11px]">זמין</div>
+<div class="col-span-2 h-6 bg-primary/20 border border-primary/40 rounded flex items-center justify-center text-primary text-[11px]">זמין מלא</div>
+<div class="col-span-2 h-6 bg-primary/20 border border-primary/40 rounded flex items-center justify-center text-primary text-[11px]">זמין</div>
+<div class="col-span-2 h-6 bg-surface-container-highest/40 border border-outline-variant rounded flex items-center justify-center text-outline text-[11px]">חסימה</div>
+</div>
+<!-- יום ב׳ -->
+<div class="grid grid-cols-8 items-center text-center font-label-md text-label-md gap-1">
+<div class="font-bold text-on-surface">ב׳</div>
+<div class="h-6 bg-primary/20 border border-primary/40 rounded flex items-center justify-center text-primary text-[11px]">זמין</div>
+<div class="col-span-2 h-6 bg-primary/20 border border-primary/40 rounded flex items-center justify-center text-primary text-[11px]">זמין מלא</div>
+<div class="col-span-2 h-6 bg-primary/20 border border-primary/40 rounded flex items-center justify-center text-primary text-[11px]">זמין</div>
+<div class="col-span-2 h-6 bg-surface-container-highest/40 border border-outline-variant rounded flex items-center justify-center text-outline text-[11px]">חסימה</div>
+</div>
+<!-- יום ג׳ (עם חריג מחר) -->
+<div class="grid grid-cols-8 items-center text-center font-label-md text-label-md gap-1 bg-tertiary/5 p-0.5 rounded">
+<div class="font-bold text-tertiary">ג׳ *</div>
+<div class="h-6 bg-tertiary/20 border border-tertiary/50 rounded flex items-center justify-center text-tertiary font-bold text-[11px]">חריג (הרצאות)</div>
+<div class="col-span-2 h-6 bg-primary/20 border border-primary/40 rounded flex items-center justify-center text-primary text-[11px]">זמין</div>
+<div class="col-span-2 h-6 bg-tertiary/20 border border-tertiary/50 rounded flex items-center justify-center text-tertiary text-[11px]">לבירור</div>
+<div class="col-span-2 h-6 bg-surface-container-highest/40 border border-outline-variant rounded flex items-center justify-center text-outline text-[11px]">חסימה</div>
+</div>
+<!-- ימים ד׳-ש׳ מקוצרים -->
+<div class="grid grid-cols-8 items-center text-center font-label-md text-label-md gap-1">
+<div class="font-bold text-on-surface">ד׳-ה׳</div>
+<div class="h-6 bg-primary/20 border border-primary/40 rounded flex items-center justify-center text-primary text-[11px]">זמין</div>
+<div class="col-span-2 h-6 bg-primary/20 border border-primary/40 rounded flex items-center justify-center text-primary text-[11px]">זמין מלא</div>
+<div class="col-span-2 h-6 bg-primary/20 border border-primary/40 rounded flex items-center justify-center text-primary text-[11px]">זמין</div>
+<div class="col-span-2 h-6 bg-surface-container-highest/40 border border-outline-variant rounded flex items-center justify-center text-outline text-[11px]">חסימה</div>
+</div>
+<div class="grid grid-cols-8 items-center text-center font-label-md text-label-md gap-1">
+<div class="font-bold text-on-surface">ו׳-ש׳</div>
+<div class="h-6 bg-surface-container-highest/40 border border-outline-variant rounded flex items-center justify-center text-outline text-[11px]">סופ״ש</div>
+<div class="col-span-2 h-6 bg-surface-container-highest/40 border border-outline-variant rounded flex items-center justify-center text-outline text-[11px]">מסחר סגור</div>
+<div class="col-span-2 h-6 bg-surface-container-highest/40 border border-outline-variant rounded flex items-center justify-center text-outline text-[11px]">מסחר סגור</div>
+<div class="col-span-2 h-6 bg-surface-container-highest/40 border border-outline-variant rounded flex items-center justify-center text-outline text-[11px]">חסימה</div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-2 border-t border-outline-variant">
+<span class="font-body-sm text-body-sm text-on-surface-variant">* יום ג׳ מושפע מחריג זמני שהוגדר על ידך</span>
+<button class="text-primary hover:text-primary-fixed text-label-md font-title font-semibold flex items-center gap-1 transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">edit_calendar</span>
+<span>ערוך שגרה שבועית</span>
+</button>
+</div>
+</section>
+<!-- 3. Temporary Exceptions List (חריגים מתוכננים) -->
+<section class="bg-surface-container-low border border-outline-variant rounded-xl p-space-md space-y-space-sm">
+<div class="flex items-center justify-between">
+<h4 class="font-title text-title font-bold text-on-surface">חריגים מתוכננים פעילים</h4>
+<span class="text-label-sm font-label-sm text-outline">1 מוגדר</span>
+</div>
+<div class="p-space-sm bg-surface-container rounded-lg border border-tertiary/40 flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-tertiary text-[20px]">event_busy</span>
+<div>
+<div class="font-title text-label-md text-on-surface font-semibold">
+                      חריג פעיל: מחר (יום ג׳) 09:00–13:00 הרצאות
+                    </div>
+<div class="font-body-sm text-body-sm text-tertiary">
+                      סטטוס: גובר על השגרה השבועית | חסימת כניסות מופעלת
+                    </div>
+</div>
+</div>
+<button class="px-space-sm py-1 bg-surface-container-high hover:bg-error-container hover:text-error text-on-surface-variant rounded border border-outline-variant text-label-sm font-label-sm transition-colors" type="button">
+                  ביטול חריג
+                </button>
+</div>
+</section>
+<!-- 4. Pre-Absence Alert Card (סריקת תיק טרום היעדרות) -->
+<section class="bg-surface-container-low border-2 border-tertiary/50 rounded-xl p-space-lg space-y-space-md relative overflow-hidden" style="box-shadow: inset 0 0 16px rgba(245, 158, 11, 0.04);">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-tertiary-container/30 border border-tertiary flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined text-[20px]">warning</span>
+</div>
+<div>
+<h3 class="font-title text-headline-md font-bold text-tertiary">סריקת תיק טרום היעדרות (מחר החל מ-09:00)</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">לפני תחילת ההיעדרות נבחנה התאמת ההחזקות הקיימות בתיק:</p>
+</div>
+</div>
+</div>
+<!-- 3 Holding Recommendations Checklist -->
+<div class="space-y-space-sm">
+<!-- Holding 1: TEVA -->
+<div class="p-space-sm bg-surface-container rounded-lg border border-outline-variant flex items-center justify-between">
+<div>
+<div class="flex items-center gap-2">
+<span class="font-title font-bold text-on-surface">טבע תעשיות (TEVA)</span>
+<span class="text-body-sm text-on-surface-variant">מדד ת״א 35</span>
+</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+                      תנודתיות נמוכה, טווח בינוני תואם היעדרות
+                    </div>
+</div>
+<span class="px-space-md py-1 bg-primary/10 border border-primary/30 text-primary font-title text-label-md font-bold rounded">
+                    להחזיק
+                  </span>
+</div>
+<!-- Holding 2: NVMI -->
+<div class="p-space-sm bg-surface-container rounded-lg border border-tertiary/40 flex items-center justify-between">
+<div>
+<div class="flex items-center gap-2">
+<span class="font-title font-bold text-on-surface">נובה (NVMI)</span>
+<span class="text-body-sm text-on-surface-variant">שבבים / נאסד״ק</span>
+</div>
+<div class="font-body-sm text-body-sm text-tertiary mt-0.5">
+                      לצמצם / שקול מימוש חלקי (דוח צפוי בארה״ב, רגישות גבוהה)
+                    </div>
+</div>
+<span class="px-space-md py-1 bg-tertiary/20 border border-tertiary text-tertiary font-title text-label-md font-bold rounded">
+                    לצמצם
+                  </span>
+</div>
+<!-- Holding 3: MGDL -->
+<div class="p-space-sm bg-surface-container rounded-lg border border-outline-variant flex items-center justify-between">
+<div>
+<div class="flex items-center gap-2">
+<span class="font-title font-bold text-on-surface">מגדל ביטוח (MGDL)</span>
+<span class="text-body-sm text-on-surface-variant">פיננסים ת״א</span>
+</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+                      תשואה יציבה ודיבידנד צפוי ללא חשיפה קריטית
+                    </div>
+</div>
+<span class="px-space-md py-1 bg-primary/10 border border-primary/30 text-primary font-title text-label-md font-bold rounded">
+                    להחזיק
+                  </span>
+</div>
+</div>
+<!-- Mandatory Policy Mandate -->
+<div class="p-space-sm bg-surface-container-highest/30 rounded border border-outline-variant flex items-center gap-2 text-label-md font-title font-semibold text-on-surface">
+<span class="material-symbols-outlined text-primary text-[18px]">lock</span>
+<span>🔒 כניסות חדשות יימנעו לחלוטין עד לאישור לחיצת "חזרתי".</span>
+</div>
+</section>
+<!-- 5. Institutional Rules Box (חוקי הניסוי והגנה) -->
+<section class="bg-surface-container-low border border-outline-variant rounded-xl p-space-md space-y-space-xs">
+<div class="flex items-center gap-2 text-outline font-title text-label-md font-bold">
+<span class="material-symbols-outlined text-[18px]">gavel</span>
+<h4>חוקי הניסוי והגנה מוסדית בזמן היעדרות</h4>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+                בזמן חוסר זמינות לא מתבצעת קנייה או מכירה, ואין הוראות מותנות (Stop Loss אוטומטי לא יופעל בהיעדרך). המעקב נמשך, אירועים נרשמים, ובחזרה תוצג תמונת מצב עדכנית. שים לב: ההחזקות נשארות חשופות לשינויי מחיר בשוק.
+              </p>
+</section>
+<!-- 6. Future Expansion Item (Disabled/Grayed card) -->
+<section class="bg-surface-container-low/40 border border-outline-variant/50 rounded-xl p-space-md opacity-60">
+<div class="flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-outline text-[22px] mt-0.5">calendar_month</span>
+<div>
+<div class="flex items-center gap-2">
+<h5 class="font-title text-label-md text-on-surface font-semibold">חיבור אוטומטי ליומן Google/Outlook</h5>
+<span class="text-[10px] bg-surface-container-high px-1.5 py-0.5 rounded text-outline border border-outline-variant">שלב ב׳</span>
+</div>
+<p class="font-body-sm text-body-sm text-outline mt-1 leading-normal">
+                    ייפתח בהמשך הניסוי, בכפוף להרשאה מפורשת ובדיקה ידנית; זמן פנוי ביומן אינו מהווה הוכחת זמינות מוחלטת.
+                  </p>
+</div>
+</div>
+</section>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

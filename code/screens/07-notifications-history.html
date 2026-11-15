@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+
+<html class="dark" dir="rtl" lang="he"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>FinAI - התראות והיסטוריה | סימולטור השקעות רב-סוכני</title>
+<!-- Google Fonts: Rubik for clean Hebrew & Institutional Typography -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined (Exact literal glyph logic) -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS v3 -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "tertiary-fixed-dim": "#ffb95f",
+            "on-secondary-container": "#adb4ce",
+            "surface-bright": "#353943",
+            "tertiary-container": "#e29100",
+            "primary-fixed-dim": "#4edea3",
+            "surface": "#0f131c",
+            "surface-container-highest": "#31353f",
+            "error": "#ffb4ab",
+            "on-background": "#dfe2ef",
+            "inverse-primary": "#006c49",
+            "primary-fixed": "#6ffbbe",
+            "error-container": "#93000a",
+            "outline": "#86948a",
+            "surface-container": "#1c1f29",
+            "on-primary": "#003824",
+            "tertiary-fixed": "#ffddb8",
+            "on-primary-fixed-variant": "#005236",
+            "secondary-container": "#3f465c",
+            "tertiary": "#ffb95f",
+            "on-surface": "#dfe2ef",
+            "on-error-container": "#ffdad6",
+            "primary": "#4edea3",
+            "on-secondary-fixed": "#131b2e",
+            "secondary-fixed": "#dae2fd",
+            "surface-dim": "#0f131c",
+            "surface-container-low": "#181b25",
+            "primary-container": "#10b981",
+            "secondary": "#bec6e0",
+            "on-primary-container": "#00422b",
+            "background": "#0f131c",
+            "on-tertiary": "#472a00",
+            "on-primary-fixed": "#002113",
+            "on-secondary": "#283044",
+            "on-secondary-fixed-variant": "#3f465c",
+            "surface-container-high": "#262a34",
+            "secondary-fixed-dim": "#bec6e0",
+            "on-tertiary-fixed": "#2a1700",
+            "on-tertiary-fixed-variant": "#653e00",
+            "surface-tint": "#4edea3",
+            "inverse-surface": "#dfe2ef",
+            "surface-container-lowest": "#0a0e17",
+            "on-error": "#690005",
+            "inverse-on-surface": "#2c303a",
+            "surface-variant": "#31353f",
+            "on-surface-variant": "#bbcabf",
+            "outline-variant": "#3c4a42",
+            "on-tertiary-container": "#523200"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "margin-mobile": "1rem",
+            "space-xs": "0.25rem",
+            "space-sm": "0.5rem",
+            "space-md": "1rem",
+            "space-lg": "1.5rem",
+            "space-xl": "2.25rem",
+            "margin": "2rem",
+            "gutter": "1.25rem",
+            "gutter-mobile": "0.75rem"
+          },
+          "fontFamily": {
+            "headline-md": ["Rubik"],
+            "body-md": ["Rubik"],
+            "label-md": ["Rubik"],
+            "numeric-metric": ["Rubik"],
+            "body-sm": ["Rubik"],
+            "display": ["Rubik"],
+            "label-sm": ["Rubik"],
+            "title": ["Rubik"],
+            "body-lg": ["Rubik"],
+            "headline-lg": ["Rubik"]
+          },
+          "fontSize": {
+            "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "label-md": ["13px", { "lineHeight": "18px", "fontWeight": "500" }],
+            "numeric-metric": ["28px", { "lineHeight": "32px", "fontWeight": "700" }],
+            "body-sm": ["12px", { "lineHeight": "18px", "fontWeight": "400" }],
+            "display": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "label-sm": ["11px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+            "title": ["16px", { "lineHeight": "24px", "fontWeight": "600" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "headline-lg": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    /* Institutional Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0f131c;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #31353f;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #86948a;
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .font-tabular {
+      font-variant-numeric: tabular-nums;
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface antialiased min-h-screen selection:bg-primary-container selection:text-on-primary-container font-body-md overflow-x-hidden">
+<!-- 1. Institutional Warning & Protocol Banner -->
+<div class="w-full bg-surface-container-lowest border-b border-tertiary-container/40 px-margin py-1.5 flex items-center justify-between text-tertiary font-label-md z-50 relative">
+<div class="flex items-center gap-space-sm mx-auto tracking-wide">
+<span class="material-symbols-outlined text-tertiary text-title" data-icon="warning">warning</span>
+<span class="font-bold">⚠️ כסף מדומה בלבד – סימולטור ללא סיכון אמיתי</span>
+<span class="text-outline-variant">|</span>
+<span>סיום הניסוי: 01.01.2027</span>
+<span class="text-outline-variant">|</span>
+<span>כל אירוע ושינוי מתועד לצורכי ביקורת ותחקור</span>
+<span class="text-outline-variant">|</span>
+<span class="px-space-xs py-0.5 rounded bg-surface-container-high text-on-surface-variant font-label-sm border border-outline-variant">פרוטוקול ISO-FIN-2026</span>
+</div>
+</div>
+<div class="flex min-h-[calc(100vh-33px)] relative">
+<!-- 2. SideNavBar (Shared Component Anchor - RTL Docked Right) -->
+<aside class="fixed right-0 top-0 h-full w-64 flex flex-col justify-between p-space-md bg-surface-dim z-40 rtl border-l border-outline-variant">
+<!-- Top Section -->
+<div class="flex flex-col gap-space-md">
+<!-- System Avatar & Identity -->
+<div class="flex items-center gap-space-sm pb-space-sm border-b border-outline-variant">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high border border-outline-variant flex items-center justify-center text-primary shadow-inner">
+<span class="material-symbols-outlined text-headline-md" data-icon="candlestick_chart">candlestick_chart</span>
+</div>
+<div class="flex flex-col">
+<span class="text-headline-md font-headline-md font-bold text-on-surface tracking-tight">FinAI אוטונומי</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant">סימולטור השקעות מוסדי</span>
+</div>
+</div>
+<!-- Virtual Capital Badge Callout -->
+<div class="px-space-md py-space-sm rounded-lg bg-surface-container border border-outline-variant/80 flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="w-2 h-2 rounded-full bg-primary-container animate-pulse"></span>
+<span class="text-label-sm font-label-sm text-on-surface-variant">יתרה מוקצית:</span>
+</div>
+<span class="text-title font-title font-bold text-primary font-tabular">₪30,000 הון וירטואלי</span>
+</div>
+<!-- Navigation Tabs (Immutable Labels with 'התראות והיסטוריה' strictly active) -->
+<nav class="flex flex-col gap-1 mt-space-xs">
+<!-- 1. דף הבית -->
+<a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" href="#">
+<span class="material-symbols-outlined text-headline-md" data-icon="dashboard">dashboard</span>
+<span class="text-label-md font-label-md">דף הבית</span>
+</a>
+<!-- 2. המלצות -->
+<a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" href="#">
+<span class="material-symbols-outlined text-headline-md" data-icon="smart_toy">smart_toy</span>
+<span class="text-label-md font-label-md">המלצות</span>
+</a>
+<!-- 3. ביצוע מדומה -->
+<a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" href="#">
+<span class="material-symbols-outlined text-headline-md" data-icon="candlestick_chart">candlestick_chart</span>
+<span class="text-label-md font-label-md">ביצוע מדומה</span>
+</a>
+<!-- 4. החזקות -->
+<a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" href="#">
+<span class="material-symbols-outlined text-headline-md" data-icon="account_balance_wallet">account_balance_wallet</span>
+<span class="text-label-md font-label-md">החזקות</span>
+</a>
+<!-- 5. עוזר אישי -->
+<a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" href="#">
+<span class="material-symbols-outlined text-headline-md" data-icon="support_agent">support_agent</span>
+<span class="text-label-md font-label-md">עוזר אישי</span>
+</a>
+<!-- 6. התראות והיסטוריה (ACTIVE NAVIGATION ITEM - MAPPED STRICTLY) -->
+<a class="flex items-center justify-between px-space-md py-space-sm rounded-lg bg-surface-container-high text-primary font-title border-e-2 border-primary" href="#">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-headline-md" data-icon="history">history</span>
+<span class="text-label-md font-label-md font-bold">התראות והיסטוריה</span>
+</div>
+<span class="px-1.5 py-0.5 rounded-full bg-primary-container/20 text-primary text-label-sm font-bold font-tabular">4</span>
+</a>
+<!-- 7. דוחות -->
+<a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" href="#">
+<span class="material-symbols-outlined text-headline-md" data-icon="assessment">assessment</span>
+<span class="text-label-md font-label-md">דוחות</span>
+</a>
+<!-- 8. היכרות והגדרות -->
+<a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" href="#">
+<span class="material-symbols-outlined text-headline-md" data-icon="settings">settings</span>
+<span class="text-label-md font-label-md">היכרות והגדרות</span>
+</a>
+</nav>
+</div>
+<!-- Footer Section of SideNav -->
+<div class="flex flex-col gap-space-sm pt-space-sm border-t border-outline-variant">
+<div class="flex items-center gap-space-sm px-space-md py-space-xs rounded-lg text-on-surface-variant font-label-sm">
+<span class="material-symbols-outlined text-title text-primary" data-icon="hub">hub</span>
+<span>סטטוס סוכנים (א׳-ד׳): <strong class="text-primary">100% תקין</strong></span>
+</div>
+<div class="flex items-center gap-space-sm px-space-md py-space-xs rounded-lg text-on-surface-variant font-label-sm">
+<span class="material-symbols-outlined text-title text-tertiary" data-icon="verified_user">verified_user</span>
+<span>יומן ביקורת: <strong class="text-on-surface">38 אירועים</strong></span>
+</div>
+<div class="text-[10px] text-outline text-center mt-1 border-t border-outline-variant/40 pt-2 font-tabular">
+          סיום הניסוי: 01.01.2027 | תקנות מודלים: 100% תקין
+        </div>
+</div>
+</aside>
+<!-- Main Viewport Canvas (Offset by SideNav w-64 on the right) -->
+<div class="flex-1 mr-64 flex flex-col min-w-0">
+<!-- 3. TopNavBar (Shared Component Anchor) -->
+<header class="w-full flex items-center justify-between px-margin py-space-sm border-b border-outline-variant rtl bg-surface-container sticky top-0 z-30">
+<!-- Right side (Start of RTL): Brand and Search -->
+<div class="flex items-center gap-space-lg">
+<div class="flex flex-col">
+<div class="text-headline-md font-headline-md font-bold text-primary tracking-tight">FinAI מנוע מסחר רב-סוכני</div>
+<span class="text-label-sm font-label-sm text-secondary font-mono">v2.4 Sovereign Intelligence Core</span>
+</div>
+<!-- Top Portfolio Quick Telemetry Strip -->
+<div class="hidden xl:flex items-center gap-space-md bg-surface-container-low px-space-md py-1.5 rounded-lg border border-outline-variant/60 text-label-md">
+<div class="flex items-center gap-1.5">
+<span class="text-on-surface-variant font-label-sm">שער רציג USD/ILS:</span>
+<span class="font-bold text-on-surface font-tabular">₪3.71</span>
+</div>
+<span class="text-outline-variant">|</span>
+<div class="flex items-center gap-1.5">
+<span class="text-on-surface-variant font-label-sm">מזומן פנוי:</span>
+<span class="font-bold text-on-surface font-tabular">₪6,240 <span class="text-secondary font-normal font-label-sm">($1,680)</span></span>
+</div>
+<span class="text-outline-variant">|</span>
+<div class="flex items-center gap-1.5">
+<span class="text-on-surface-variant font-label-sm">שווי תיק כולל:</span>
+<span class="font-bold text-primary font-tabular">₪31,420 <span class="text-primary-container text-label-sm">(+4.73%)</span></span>
+</div>
+<span class="text-outline-variant">|</span>
+<!-- 4 Agent Mini Indicators -->
+<div class="flex items-center gap-1" title="סוכנים א', ב', ג', ד' פעילים">
+<span class="text-on-surface-variant font-label-sm ml-1">סוכנים:</span>
+<span class="w-5 h-5 rounded bg-surface-container-high border border-primary-container text-primary flex items-center justify-center font-bold text-[10px]">א׳</span>
+<span class="w-5 h-5 rounded bg-surface-container-high border border-primary-container text-primary flex items-center justify-center font-bold text-[10px]">ב׳</span>
+<span class="w-5 h-5 rounded bg-surface-container-high border border-primary-container text-primary flex items-center justify-center font-bold text-[10px]">ג׳</span>
+<span class="w-5 h-5 rounded bg-surface-container-high border border-primary-container text-primary flex items-center justify-center font-bold text-[10px]">ד׳</span>
+</div>
+</div>
+</div>
+<!-- Left side (End of RTL): Actions & Profile -->
+<div class="flex items-center gap-space-md">
+<!-- Export Button (CSV / JSON / PDF) -->
+<button class="flex items-center gap-space-xs px-space-md py-1.5 rounded-lg bg-surface-container-high hover:bg-surface-bright text-on-surface font-label-md border border-outline-variant transition-colors active:scale-[0.98]">
+<span class="material-symbols-outlined text-title text-primary" data-icon="download">download</span>
+<span>ייצוא יומן ביקורת (CSV/JSON/PDF)</span>
+</button>
+<!-- Top Navigation Trailing Action Buttons -->
+<div class="flex items-center gap-space-xs border-r border-outline-variant pr-space-md">
+<button class="p-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors relative" title="התראות מערכת">
+<span class="material-symbols-outlined text-headline-md" data-icon="notifications">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-tertiary"></span>
+</button>
+<button class="p-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors" title="אבטחה ופרוטוקולים">
+<span class="material-symbols-outlined text-headline-md" data-icon="shield">shield</span>
+</button>
+<button class="p-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors" title="הגדרות תצוגה">
+<span class="material-symbols-outlined text-headline-md" data-icon="tune">tune</span>
+</button>
+</div>
+<!-- Profile Badge -->
+<div class="flex items-center gap-space-xs pl-space-xs">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest border border-outline flex items-center justify-center text-primary font-bold text-body-sm">
+              ניהול
+            </div>
+</div>
+</div>
+</header>
+<!-- Main Scrollable Dashboard Content -->
+<main class="p-margin flex flex-col gap-space-xl">
+<!-- Page Header & Title Context -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-md pb-space-sm border-b border-outline-variant">
+<div>
+<div class="flex items-center gap-space-sm">
+<h1 class="text-headline-lg font-headline-lg font-bold text-on-surface">יומן ביקורת, התראות והיסטוריה</h1>
+<span class="px-2 py-0.5 rounded bg-primary-container/15 text-primary text-label-sm font-semibold border border-primary-container/40">
+                מעקב רציף (Audit Trail)
+              </span>
+</div>
+<p class="text-body-md font-body-md text-on-surface-variant mt-1">
+              תיעוד ליניארי של כלל החלטות הסוכנים (א׳-ד׳), פקיעת חלונות תגובה, תחקור ספי סיכון ושינויי מדיניות באישור אנושי.
+            </p>
+</div>
+<!-- Secondary Telemetry / Time Snapshot -->
+<div class="flex items-center gap-space-sm text-label-sm text-on-surface-variant bg-surface-container-low px-space-md py-space-sm rounded-lg border border-outline-variant">
+<span class="material-symbols-outlined text-title text-primary" data-icon="schedule">schedule</span>
+<span>סנכרון יומן אחרון: <strong class="text-on-surface font-tabular">26.10.2026, 10:44:18 (זמן ת״א)</strong></span>
+</div>
+</div>
+<!-- ========================================================================= -->
+<!-- PART 1: Notification Center (מרכז התראות והודעות דחיפה של האפליקציה) -->
+<!-- ========================================================================= -->
+<section class="flex flex-col gap-space-md bg-surface-container rounded-xl p-space-lg border border-outline-variant">
+<!-- Notification Section Header -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
+<div>
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-headline-md text-primary" data-icon="notifications_active">notifications_active</span>
+<h2 class="text-headline-md font-headline-md font-bold text-on-surface">מרכז התראות והודעות דחיפה של האפליקציה</h2>
+</div>
+<p class="text-body-md font-body-md text-tertiary-fixed-dim font-medium mt-1">
+                ⚠️ פתיחת התראה פותחת מצב עדכני בלבד ואינה מבצעת פעולה אוטומטית. מעקב אחר שלוש נקודות סטטוס נפרדות: נשלחה · נפתחה · בוצעה.
+              </p>
+</div>
+<span class="text-label-sm font-label-sm text-on-surface-variant self-start sm:self-center">
+              מוצגות 4 התראות אחרונות
+            </span>
+</div>
+<!-- Notification Cards Grid (4 Mandatory Cards) -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-space-md pt-space-xs">
+<!-- Card 1: נייס בע״מ (Green/Active Execution) -->
+<div class="flex flex-col justify-between bg-surface-container-low rounded-lg p-space-md border border-primary/40 relative overflow-hidden group hover:border-primary transition-all">
+<div class="absolute top-0 right-0 left-0 h-1 bg-primary"></div>
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-start justify-between gap-space-xs">
+<span class="px-2 py-0.5 rounded bg-primary-container/20 text-primary text-label-sm font-bold">
+                    המלצת קנייה חדשה
+                  </span>
+<span class="text-label-sm text-secondary font-mono">NOTIF-8841</span>
+</div>
+<h3 class="text-title font-title font-bold text-on-surface mt-1">נייס בע״מ (NICE)</h3>
+<div class="flex items-center gap-space-md text-label-sm text-on-surface-variant pb-2 border-b border-outline-variant/40">
+<span>שיוך: <strong class="text-on-surface">טווח קצר</strong></span>
+<span>סכום: <strong class="text-primary font-tabular">₪3,200</strong></span>
+</div>
+<!-- 3 Explicit Status Points -->
+<div class="flex flex-col gap-1.5 py-space-xs text-label-sm">
+<div class="flex items-center gap-2 text-primary font-medium">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span>נשלחה: <span class="font-tabular">10:12</span> (תקין)</span>
+</div>
+<div class="flex items-center gap-2 text-primary font-medium">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span>נפתחה: <span class="font-tabular">10:15</span> (ע"י משתמש)</span>
+</div>
+<div class="flex items-center gap-2 text-primary font-medium">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span>בוצעה: <span class="font-tabular">10:44</span> (רישום SIM-9941)</span>
+</div>
+</div>
+</div>
+<div class="pt-space-sm mt-space-xs border-t border-outline-variant/60 flex items-center justify-between">
+<span class="text-label-sm text-primary font-semibold">ביצוע מדומה הושלם</span>
+<button class="px-space-sm py-1 rounded bg-surface-container-high hover:bg-surface-bright text-on-surface text-label-sm border border-outline-variant transition-colors">
+                  צפייה במצב עדכני
+                </button>
+</div>
+</div>
+<!-- Card 2: נובה (Amber/Expired Window Warning) -->
+<div class="flex flex-col justify-between bg-surface-container-low rounded-lg p-space-md border border-tertiary/50 relative overflow-hidden group hover:border-tertiary transition-all">
+<div class="absolute top-0 right-0 left-0 h-1 bg-tertiary"></div>
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-start justify-between gap-space-xs">
+<span class="px-2 py-0.5 rounded bg-tertiary-container/20 text-tertiary text-label-sm font-bold">
+                    המלצה פגה – לא בוצעה
+                  </span>
+<span class="text-label-sm text-secondary font-mono">NOTIF-8790</span>
+</div>
+<h3 class="text-title font-title font-bold text-on-surface mt-1">נובה (NVMI)</h3>
+<p class="text-body-sm text-on-surface-variant leading-relaxed pb-2 border-b border-outline-variant/40">
+                  חלף חלון התגובה (60 דק׳). כניסות חדשות הושהו זמנית עד לאישור חזרה של המשתמש. המעקב אחר פוזיציות ממשיך כסדרו.
+                </p>
+<!-- 3 Explicit Status Points -->
+<div class="flex flex-col gap-1.5 py-space-xs text-label-sm">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="w-2 h-2 rounded-full bg-outline"></span>
+<span>נשלחה: <span class="font-tabular">08:30</span></span>
+</div>
+<div class="flex items-center gap-2 text-tertiary font-medium">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span>נפתחה: <span class="font-tabular">09:40</span> (באיחור)</span>
+</div>
+<div class="flex items-center gap-2 text-error font-medium">
+<span class="w-2 h-2 rounded-full border border-error"></span>
+<span>לא בוצעה: — (חלון פקע)</span>
+</div>
+</div>
+</div>
+<div class="pt-space-sm mt-space-xs border-t border-outline-variant/60 flex items-center justify-between">
+<span class="text-label-sm text-tertiary font-semibold">ממתין לאישור</span>
+<button class="px-space-sm py-1 rounded bg-tertiary-container/30 hover:bg-tertiary-container/50 text-tertiary-fixed text-label-sm font-bold border border-tertiary transition-colors">
+                  אישור חזרה לפעילות
+                </button>
+</div>
+</div>
+<!-- Card 3: טבע (Blue/Periodic Holding Review) -->
+<div class="flex flex-col justify-between bg-surface-container-low rounded-lg p-space-md border border-secondary-container relative overflow-hidden group hover:border-secondary transition-all">
+<div class="absolute top-0 right-0 left-0 h-1 bg-secondary"></div>
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-start justify-between gap-space-xs">
+<span class="px-2 py-0.5 rounded bg-secondary-container/30 text-secondary text-label-sm font-bold">
+                    סקירת החזקות תקופתית
+                  </span>
+<span class="text-label-sm text-secondary font-mono">NOTIF-8812</span>
+</div>
+<h3 class="text-title font-title font-bold text-on-surface mt-1">טבע (TEVA)</h3>
+<p class="text-body-sm text-on-surface-variant leading-relaxed pb-2 border-b border-outline-variant/40">
+                  סוכן ד' בחן מחדש תרחיש מקורי מול דוח רבעוני. המלצה: להמשיך להחזיק (יעד <span class="text-on-surface font-bold font-tabular">₪8,100</span>).
+                </p>
+<!-- 3 Explicit Status Points -->
+<div class="flex flex-col gap-1.5 py-space-xs text-label-sm">
+<div class="flex items-center gap-2 text-secondary">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span>נשלחה: <span class="font-tabular">09:00</span></span>
+</div>
+<div class="flex items-center gap-2 text-secondary">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span>נפתחה: <span class="font-tabular">09:10</span></span>
+</div>
+<div class="flex items-center gap-2 text-primary font-medium">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span>בוצעה: <span class="font-tabular">09:12</span> (המשך מעקב)</span>
+</div>
+</div>
+</div>
+<div class="pt-space-sm mt-space-xs border-t border-outline-variant/60 flex items-center justify-between">
+<span class="text-label-sm text-secondary">מעקב שוטף</span>
+<button class="px-space-sm py-1 rounded bg-surface-container-high hover:bg-surface-bright text-on-surface text-label-sm border border-outline-variant transition-colors">
+                  צפייה במצב עדכני
+                </button>
+</div>
+</div>
+<!-- Card 4: סף סיכון 5% (Amber/Risk Limit Check) -->
+<div class="flex flex-col justify-between bg-surface-container-low rounded-lg p-space-md border border-tertiary-container relative overflow-hidden group hover:border-tertiary transition-all">
+<div class="absolute top-0 right-0 left-0 h-1 bg-tertiary-container"></div>
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-start justify-between gap-space-xs">
+<span class="px-2 py-0.5 rounded bg-tertiary-container/20 text-tertiary text-label-sm font-bold">
+                    אירוע סף סיכון 5%
+                  </span>
+<span class="text-label-sm text-secondary font-mono">NOTIF-8755</span>
+</div>
+<h3 class="text-title font-title font-bold text-on-surface mt-1">תיק בינוני (₪10,000)</h3>
+<p class="text-body-sm text-on-surface-variant leading-relaxed pb-2 border-b border-outline-variant/40">
+                  ירידה מצטברת הגיעה ל-<strong class="text-tertiary font-tabular">₪510 (5.1%)</strong>. נפתח דוח תחקור אירוע אוטומטי (ללא השהיית כניסות).
+                </p>
+<!-- 3 Explicit Status Points -->
+<div class="flex flex-col gap-1.5 py-space-xs text-label-sm">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="w-2 h-2 rounded-full bg-outline"></span>
+<span>נשלחה: אתמול <span class="font-tabular">16:30</span></span>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="w-2 h-2 rounded-full bg-outline"></span>
+<span>נפתחה: אתמול <span class="font-tabular">16:45</span></span>
+</div>
+<div class="flex items-center gap-2 text-primary font-medium">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span>בוצעה: הושלם דוח ביקורת</span>
+</div>
+</div>
+</div>
+<div class="pt-space-sm mt-space-xs border-t border-outline-variant/60 flex items-center justify-between">
+<span class="text-label-sm text-tertiary">ננעל ביומן</span>
+<button class="px-space-sm py-1 rounded bg-surface-container-high hover:bg-surface-bright text-on-surface text-label-sm border border-outline-variant transition-colors">
+                  דוח תחקור
+                </button>
+</div>
+</div>
+</div>
+</section>
+<!-- ========================================================================= -->
+<!-- PART 2: Filter & Query Bar (סרגל מסננים וחיפוש) -->
+<!-- ========================================================================= -->
+<section class="flex flex-col gap-space-sm bg-surface-container rounded-xl p-space-md border border-outline-variant">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-md items-center">
+<!-- ID Search Input (5 Cols) -->
+<div class="lg:col-span-5 relative">
+<span class="material-symbols-outlined absolute inset-y-0 right-3 flex items-center text-outline pointer-events-none" data-icon="search">search</span>
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg pr-10 pl-space-md py-2 text-body-md text-on-surface placeholder:text-outline focus:outline-none focus:border-primary transition-colors" placeholder="חיפוש לפי מזהה (למשל REC-26-084, SIM-9941, POL-003)..." type="text" value="REC-26-084"/>
+</div>
+<!-- Sub-portfolio Filter (3 Cols) -->
+<div class="lg:col-span-3 flex items-center gap-space-xs bg-surface-container-lowest p-1 rounded-lg border border-outline-variant">
+<span class="text-label-sm text-on-surface-variant px-space-xs">תיק:</span>
+<button class="flex-1 py-1 px-2 rounded bg-surface-container-high text-primary font-bold text-label-sm transition-colors">הכל</button>
+<button class="flex-1 py-1 px-2 rounded hover:bg-surface-container text-on-surface-variant text-label-sm transition-colors">קצר (20K)</button>
+<button class="flex-1 py-1 px-2 rounded hover:bg-surface-container text-on-surface-variant text-label-sm transition-colors">בינוני (10K)</button>
+</div>
+<!-- Date Range Selector (3 Cols) -->
+<div class="lg:col-span-3 flex items-center gap-space-xs bg-surface-container-lowest p-1 rounded-lg border border-outline-variant">
+<span class="text-label-sm text-on-surface-variant px-space-xs">טווח:</span>
+<button class="flex-1 py-1 px-2 rounded bg-surface-container-high text-on-surface font-bold text-label-sm">שבוע אחרון</button>
+<button class="flex-1 py-1 px-2 rounded hover:bg-surface-container text-on-surface-variant text-label-sm">חודש</button>
+<button class="flex-1 py-1 px-2 rounded hover:bg-surface-container text-on-surface-variant text-label-sm">מותאם</button>
+</div>
+<!-- Reset Filters (1 Col) -->
+<div class="lg:col-span-1 flex justify-end">
+<button class="w-full py-2 px-space-xs rounded-lg bg-surface-container-high hover:bg-surface-bright text-on-surface-variant hover:text-on-surface text-label-sm border border-outline-variant flex items-center justify-center gap-1 transition-colors" title="איפוס כל הסינונים">
+<span class="material-symbols-outlined text-title" data-icon="restart_alt">restart_alt</span>
+<span class="hidden md:inline">איפוס</span>
+</button>
+</div>
+</div>
+<!-- Event Type Filter Chips (Sub-row) -->
+<div class="flex items-center gap-2 overflow-x-auto pt-space-xs border-t border-outline-variant/40 scrollbar-none">
+<span class="text-label-sm text-outline-variant whitespace-nowrap">סוג אירוע:</span>
+<button class="px-space-md py-1 rounded-full bg-primary-container text-on-primary-container font-label-md font-bold text-label-sm whitespace-nowrap shadow-sm">
+              הכל (38)
+            </button>
+<button class="px-space-md py-1 rounded-full bg-surface-container-high hover:bg-surface-bright text-on-surface-variant hover:text-on-surface text-label-sm whitespace-nowrap border border-outline-variant transition-colors">
+              המלצות (12)
+            </button>
+<button class="px-space-md py-1 rounded-full bg-surface-container-high hover:bg-surface-bright text-on-surface-variant hover:text-on-surface text-label-sm whitespace-nowrap border border-outline-variant transition-colors">
+              עסקאות (6)
+            </button>
+<button class="px-space-md py-1 rounded-full bg-surface-container-high hover:bg-surface-bright text-on-surface-variant hover:text-on-surface text-label-sm whitespace-nowrap border border-outline-variant transition-colors">
+              שינויי הגדרות ומדיניות (5)
+            </button>
+<button class="px-space-md py-1 rounded-full bg-surface-container-high hover:bg-surface-bright text-on-surface-variant hover:text-on-surface text-label-sm whitespace-nowrap border border-outline-variant transition-colors">
+              ספי סיכון (4)
+            </button>
+<button class="px-space-md py-1 rounded-full bg-surface-container-high hover:bg-surface-bright text-on-surface-variant hover:text-on-surface text-label-sm whitespace-nowrap border border-outline-variant transition-colors">
+              זמינות משתמש (7)
+            </button>
+<button class="px-space-md py-1 rounded-full bg-surface-container-high hover:bg-surface-bright text-on-surface-variant hover:text-on-surface text-label-sm whitespace-nowrap border border-outline-variant transition-colors">
+              תקלות ואימותי מידע (4)
+            </button>
+</div>
+</section>
+<!-- ========================================================================= -->
+<!-- PART 3 + 4: SPLIT LAYOUT (ציר זמן יומן ביקורת & פאנל תחקור Diff) -->
+<!-- ========================================================================= -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+<!-- RIGHT SECTION (WIDER - 7 Cols): Chronological Audit Table & Timeline -->
+<section class="lg:col-span-7 flex flex-col gap-space-md bg-surface-container rounded-xl p-space-lg border border-outline-variant">
+<div class="flex items-center justify-between pb-space-xs border-b border-outline-variant">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-headline-md text-primary" data-icon="account_tree">account_tree</span>
+<h2 class="text-headline-md font-headline-md font-bold text-on-surface">יומן אירועים כרונולוגי וציר זמן ביקורת</h2>
+</div>
+<span class="text-label-sm font-label-sm text-secondary">7 אירועים רלוונטיים לתצוגה</span>
+</div>
+<!-- Detailed Event Audit Table / Stack -->
+<div class="flex flex-col gap-space-md">
+<!-- EVENT 1: Today 10:44 (SIM-9941 v1 - ביצוע מדומה) -->
+<div class="flex flex-col p-space-md rounded-lg bg-surface-container-low border border-primary-container/40 hover:border-primary transition-all">
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary text-title" data-icon="task_alt">task_alt</span>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-title font-bold text-on-surface">רישום ביצוע מדומה – NICE</span>
+<span class="px-1.5 py-0.5 rounded bg-surface-container-high text-primary font-mono text-[11px] font-bold">SIM-9941 v1</span>
+<span class="px-2 py-0.2 rounded bg-primary-container/20 text-primary text-label-sm">ביצוע מדומה</span>
+</div>
+<span class="text-label-sm text-secondary font-tabular">היום, 10:44:18 (זמן תל אביב)</span>
+</div>
+</div>
+<div class="text-label-sm text-outline-variant font-mono">מקור: משתמש + סוכן ד׳</div>
+</div>
+<div class="mt-space-sm text-body-md text-on-surface-variant bg-surface-container-lowest p-space-sm rounded border border-outline-variant/40">
+                  רישום קנייה מדומה של 4 יח' NICE לפי מחיר ₪684.50 (₪2,738.00 + ₪2.19 עמלות סימולטור).
+                </div>
+<div class="mt-space-xs flex items-center justify-between text-label-sm pt-space-xs">
+<span class="text-on-surface-variant">השפעה: <strong class="text-on-surface">ניצול ₪2,740.19 ממזומן טווח קצר, פוזיציה נפתחה במעקב</strong></span>
+<button class="text-primary hover:underline text-label-sm font-semibold flex items-center gap-1">
+<span>פרטי פקודה</span>
+<span class="material-symbols-outlined text-sm" data-icon="arrow_back">arrow_back</span>
+</button>
+</div>
+</div>
+<!-- EVENT 2: Today 10:43 (REC-26-084 v2 - בדיקת תוקף מחודשת - SELECTED CARD) -->
+<div class="flex flex-col p-space-md rounded-lg bg-surface-container-high border-2 border-primary shadow-lg relative">
+<div class="absolute -top-3 left-4 px-2 py-0.5 rounded bg-primary text-on-primary font-bold text-label-sm">
+                  אירוע נבחר לתחקור
+                </div>
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary text-title" data-icon="sync_saved_locally">sync_saved_locally</span>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-title font-bold text-on-surface">בדיקת תוקף מחודשת – שינוי סכום יעד</span>
+<span class="px-1.5 py-0.5 rounded bg-surface-container text-primary font-mono text-[11px] font-bold">REC-26-084 v2</span>
+<span class="px-2 py-0.2 rounded bg-primary-container/20 text-primary text-label-sm">בדיקת תוקף מחודשת</span>
+</div>
+<span class="text-label-sm text-secondary font-tabular">היום, 10:43:18 (זמן תל אביב)</span>
+</div>
+</div>
+<div class="text-label-sm text-primary font-mono">מקור: משתמש + סוכן ג׳</div>
+</div>
+<div class="mt-space-sm text-body-md text-on-surface-variant bg-surface-container-lowest p-space-sm rounded border border-outline-variant/60">
+                  המשתמש שינה סכום יעד מ-₪3,200 ל-₪2,738. בוצעה בדיקת תוקף מחדש של מגבלת ריכוז (13.7% מתוך מקס' 20%). עבר בהצלחה.
+                </div>
+<div class="mt-space-xs flex items-center justify-between text-label-sm pt-space-xs">
+<span class="text-on-surface-variant">השפעה: <strong class="text-on-surface">עדכון כמות יעד ל-4 מניות עגולות</strong></span>
+<span class="text-primary font-semibold text-label-sm">פעיל בפאנל השוואה ➔</span>
+</div>
+</div>
+<!-- EVENT 3: Today 10:12 (REC-26-084 v1 - הפקת המלצה) -->
+<div class="flex flex-col p-space-md rounded-lg bg-surface-container-low border border-outline-variant hover:border-outline transition-all">
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-title" data-icon="lightbulb">lightbulb</span>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-title font-bold text-on-surface">הפקת המלצת קנייה ראשונית – NICE</span>
+<span class="px-1.5 py-0.5 rounded bg-surface-container-high text-secondary font-mono text-[11px] font-bold">REC-26-084 v1</span>
+<span class="px-2 py-0.2 rounded bg-secondary-container/40 text-secondary text-label-sm">הפקת המלצה</span>
+</div>
+<span class="text-label-sm text-secondary font-tabular">היום, 10:12:04</span>
+</div>
+</div>
+<div class="text-label-sm text-outline-variant font-mono">מקור: סוכן ד׳ (איחוד א׳, ב׳, ג׳)</div>
+</div>
+<div class="mt-space-sm text-body-md text-on-surface-variant bg-surface-container-lowest p-space-sm rounded border border-outline-variant/40">
+                  הפקת המלצת קנייה ראשונית למניית NICE עקב העלאת תחזיות תזרים מזומנים חופשי וצמיחה בענן.
+                </div>
+<div class="mt-space-xs flex items-center justify-between text-label-sm pt-space-xs">
+<span class="text-on-surface-variant">השפעה: <strong class="text-on-surface">נשלחה התראת דחיפה NOTIF-8841 למשתמש</strong></span>
+<span class="text-outline text-label-sm">גרסת מקור</span>
+</div>
+</div>
+<!-- EVENT 4: Today 09:40 (POL-004 - זמינות משתמש) -->
+<div class="flex flex-col p-space-md rounded-lg bg-surface-container-low border border-outline-variant hover:border-outline transition-all">
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-tertiary text-title" data-icon="person_check">person_check</span>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-title font-bold text-on-surface">אישור חזרה לפעילות – שחרור השהייה</span>
+<span class="px-1.5 py-0.5 rounded bg-surface-container-high text-tertiary font-mono text-[11px] font-bold">POL-004</span>
+<span class="px-2 py-0.2 rounded bg-tertiary-container/20 text-tertiary text-label-sm">זמינות משתמש</span>
+</div>
+<span class="text-label-sm text-secondary font-tabular">היום, 09:40:12</span>
+</div>
+</div>
+<div class="text-label-sm text-outline-variant font-mono">מקור: משתמש (ידני)</div>
+</div>
+<div class="mt-space-sm text-body-md text-on-surface-variant bg-surface-container-lowest p-space-sm rounded border border-outline-variant/40">
+                  המשתמש לחץ על כפתור "חזרתי" והפעיל מחדש קבלת הצעות לאחר פקיעת חלון נובה.
+                </div>
+<div class="mt-space-xs flex items-center justify-between text-label-sm pt-space-xs">
+<span class="text-on-surface-variant">השפעה: <strong class="text-on-surface">שחרור השהיית כניסות זמנית שנוצרה לאחר פקיעת חלון התגובה ב-NVMI</strong></span>
+<span class="text-primary text-label-sm font-semibold">סוכנים פעילים</span>
+</div>
+</div>
+<!-- EVENT 5: Yesterday 17:15 (POL-003 - שינוי מדיניות וספים) -->
+<div class="flex flex-col p-space-md rounded-lg bg-surface-container-low border border-tertiary/40 hover:border-tertiary transition-all">
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-tertiary text-title" data-icon="policy">policy</span>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-title font-bold text-on-surface">עדכון תקרת ריכוז ענפית (טכנולוגיה 30% ➔ 35%)</span>
+<span class="px-1.5 py-0.5 rounded bg-surface-container-high text-tertiary font-mono text-[11px] font-bold">POL-003</span>
+<span class="px-2 py-0.2 rounded bg-tertiary-container/20 text-tertiary text-label-sm">שינוי מדיניות וספים</span>
+</div>
+<span class="text-label-sm text-secondary font-tabular">אתמול, 17:15:00</span>
+</div>
+</div>
+<div class="text-label-sm text-outline-variant font-mono">מקור: סוכן ג׳ באישור משתמש</div>
+</div>
+<div class="mt-space-sm text-body-md text-on-surface-variant bg-surface-container-lowest p-space-sm rounded border border-outline-variant/40">
+                  עדכון תקרת ריכוז בענף הטכנולוגיה מ-30% ל-35% באישור המשתמש. סיבה מתועדת: "חשיפה מוגדלת למוליכים למחצה".
+                </div>
+<div class="mt-space-xs p-space-xs rounded bg-tertiary-container/10 border border-tertiary/30 text-label-sm text-tertiary">
+<strong>השפעה על ההשוואה:</strong> הרחבת יקום ההשקעה בטווח קצר, שינוי קו בסיס מול תנאי תחילת הניסוי מתועד בדוח הסופי.
+                </div>
+</div>
+<!-- EVENT 6: 2 Days Ago 14:22 (RSK-05-CHECK - סף סיכון 5%) -->
+<div class="flex flex-col p-space-md rounded-lg bg-surface-container-low border border-outline-variant hover:border-outline transition-all">
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-tertiary text-title" data-icon="warning_amber">warning_amber</span>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-title font-bold text-on-surface">אירוע סף סיכון 5% – תיק בינוני</span>
+<span class="px-1.5 py-0.5 rounded bg-surface-container-high text-tertiary font-mono text-[11px] font-bold">RSK-05-CHECK</span>
+<span class="px-2 py-0.2 rounded bg-tertiary-container/20 text-tertiary text-label-sm">סף סיכון 5%</span>
+</div>
+<span class="text-label-sm text-secondary font-tabular">שלשום, 14:22:45</span>
+</div>
+</div>
+<div class="text-label-sm text-outline-variant font-mono">מקור: מערכת אוטונומית (ג׳ ו-ד׳)</div>
+</div>
+<div class="mt-space-sm text-body-md text-on-surface-variant bg-surface-container-lowest p-space-sm rounded border border-outline-variant/40">
+                  תיק בינוני רשם ירידה של ₪510 (5.1%). נשמר אירוע סף סיכון ונפתח דוח תחקור ללא חסימת כניסות.
+                </div>
+<div class="mt-space-xs flex items-center justify-between text-label-sm pt-space-xs">
+<span class="text-on-surface-variant">השפעה: <strong class="text-on-surface">אין חסימת כניסות, הפקת דוח למשתמש, אירוע ננעל ביומן</strong></span>
+<span class="text-secondary text-label-sm">אירוע נעול</span>
+</div>
+</div>
+<!-- EVENT 7: 19.10.2026 (AUD-DATA-104 - תקלות ואימות מידע) -->
+<div class="flex flex-col p-space-md rounded-lg bg-surface-container-low border border-error/40 hover:border-error transition-all">
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-error text-title" data-icon="gpp_bad">gpp_bad</span>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-title font-bold text-on-surface">סיכול עסקת שווא – סתירה במקורות מידע (ENLT)</span>
+<span class="px-1.5 py-0.5 rounded bg-surface-container-high text-error font-mono text-[11px] font-bold">AUD-DATA-104</span>
+<span class="px-2 py-0.2 rounded bg-error-container/30 text-error text-label-sm">תקלות ואימות מידע</span>
+</div>
+<span class="text-label-sm text-secondary font-tabular">19.10.2026, 11:05:14</span>
+</div>
+</div>
+<div class="text-label-sm text-outline-variant font-mono">מקור: סוכן א׳ + סוכן ב׳</div>
+</div>
+<div class="mt-space-sm text-body-md text-on-surface-variant bg-surface-container-lowest p-space-sm rounded border border-outline-variant/40">
+                  סתירה במקורות נתונים: פוסט ברשת X טען להודעת מיזוג ב-ENLT, סוכן א' וב' הצליבו מול דיווחי מאיה/SEC ונמצא כי השמועה כוזבת.
+                </div>
+<div class="mt-space-xs flex items-center justify-between text-label-sm pt-space-xs">
+<span class="text-on-surface-variant">השפעה: <strong class="text-on-surface">הרעיון נפסל לחלוטין לפני שלב המלצה, תועדה מניעת עסקת שווא</strong></span>
+<span class="text-primary text-label-sm font-semibold">סוכך בהצלחה</span>
+</div>
+</div>
+</div>
+</section>
+<!-- LEFT SECTION (5 Cols): Event Detail & Diff Panel (פאנל פרטי אירוע והשוואת לפני/אחרי) -->
+<section class="lg:col-span-5 flex flex-col gap-space-md bg-surface-container rounded-xl p-space-lg border border-primary/50 shadow-xl sticky top-20">
+<!-- Panel Header -->
+<div class="flex flex-col gap-1 pb-space-sm border-b border-outline-variant">
+<div class="flex items-center justify-between">
+<span class="px-2 py-0.5 rounded bg-primary-container/20 text-primary text-label-sm font-bold">
+                  כרטיס תחקור מעמיק
+                </span>
+<span class="text-secondary font-mono text-label-sm">SHA256: 8f9a...3c21</span>
+</div>
+<h3 class="text-title font-title font-bold text-on-surface mt-1">
+                פרטי אירוע וביקורת: REC-26-084 v2 (עדכון ובדיקת תוקף)
+              </h3>
+</div>
+<!-- Exact Timestamp Audit Trail -->
+<div class="bg-surface-container-lowest p-space-sm rounded-lg border border-outline-variant flex flex-col gap-1.5 text-label-sm">
+<div class="flex items-center justify-between">
+<span class="text-on-surface-variant">מועד יצירה מקורי:</span>
+<span class="text-on-surface font-mono font-tabular">26.10.2026 10:12:04</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-on-surface-variant">מועד שינוי משתמש:</span>
+<span class="text-tertiary font-mono font-tabular">26.10.2026 10:43:15</span>
+</div>
+<div class="flex items-center justify-between border-t border-outline-variant/40 pt-1">
+<span class="text-on-surface-variant">מועד בדיקת תוקף מחודשת:</span>
+<span class="text-primary font-mono font-tabular font-bold">26.10.2026 10:43:18</span>
+</div>
+</div>
+<!-- Before vs After (Diff Audit Box) -->
+<div class="flex flex-col gap-space-xs">
+<div class="text-label-md font-bold text-on-surface flex items-center gap-1.5">
+<span class="material-symbols-outlined text-title text-primary" data-icon="difference">difference</span>
+<span>השוואת נתונים (לפני ➔ אחרי השינוי):</span>
+</div>
+<div class="flex flex-col gap-2 bg-surface-container-lowest p-space-md rounded-lg border border-outline-variant">
+<!-- Diff Item 1: Capital Amount -->
+<div class="flex items-center justify-between text-label-sm pb-1.5 border-b border-outline-variant/40">
+<span class="text-on-surface-variant">סכום מוצע:</span>
+<div class="flex items-center gap-2">
+<span class="text-secondary line-through font-tabular">₪3,200</span>
+<span class="text-outline text-xs">➔</span>
+<span class="text-primary font-bold font-tabular">₪2,738</span>
+<span class="px-1 rounded bg-surface-container-high text-tertiary text-[10px] font-mono font-tabular">(-₪462)</span>
+</div>
+</div>
+<!-- Diff Item 2: Units / Quantity -->
+<div class="flex items-center justify-between text-label-sm pb-1.5 border-b border-outline-variant/40">
+<span class="text-on-surface-variant">כמות מניות יעד:</span>
+<div class="flex items-center gap-2">
+<span class="text-secondary font-tabular">4.67 (חלקי)</span>
+<span class="text-outline text-xs">➔</span>
+<span class="text-primary font-bold font-tabular">4 מניות שלמות</span>
+</div>
+</div>
+<!-- Diff Item 3: Portfolio Exposure -->
+<div class="flex items-center justify-between text-label-sm pb-1.5 border-b border-outline-variant/40">
+<span class="text-on-surface-variant">ניצול תקציב טווח קצר:</span>
+<div class="flex items-center gap-2">
+<span class="text-secondary font-tabular">16.0%</span>
+<span class="text-outline text-xs">➔</span>
+<span class="text-primary font-bold font-tabular">13.7%</span>
+<span class="text-outline-variant text-[11px]">(תקרה: 20%)</span>
+</div>
+</div>
+<!-- Diff Item 4: Verification Status -->
+<div class="flex items-center justify-between text-label-sm">
+<span class="text-on-surface-variant">סטטוס אימות:</span>
+<div class="flex items-center gap-2">
+<span class="text-secondary">ממתין</span>
+<span class="text-outline text-xs">➔</span>
+<span class="text-primary font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-sm" data-icon="check_circle">check_circle</span>
+<span>מאושר ע״י א׳, ב׳, ג׳</span>
+</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Agent Attribution Chain (שרשרת הסוכנים המעורבים) -->
+<div class="flex flex-col gap-space-xs">
+<span class="text-label-md font-bold text-on-surface">שרשרת הסוכנים המעורבים:</span>
+<div class="grid grid-cols-3 gap-2">
+<div class="p-2 rounded bg-surface-container-low border border-outline-variant flex flex-col items-center text-center">
+<span class="w-6 h-6 rounded-full bg-primary/20 text-primary font-bold text-xs flex items-center justify-center">א׳</span>
+<span class="text-[11px] font-bold text-on-surface mt-1">סוכן שוק</span>
+<span class="text-[10px] text-secondary font-tabular">ציטוט ₪684.50</span>
+</div>
+<div class="p-2 rounded bg-surface-container-low border border-outline-variant flex flex-col items-center text-center">
+<span class="w-6 h-6 rounded-full bg-primary/20 text-primary font-bold text-xs flex items-center justify-center">ג׳</span>
+<span class="text-[11px] font-bold text-on-surface mt-1">סוכן בקרה</span>
+<span class="text-[10px] text-secondary">מגבלת 20% תקינה</span>
+</div>
+<div class="p-2 rounded bg-surface-container-low border border-outline-variant flex flex-col items-center text-center">
+<span class="w-6 h-6 rounded-full bg-primary/20 text-primary font-bold text-xs flex items-center justify-center">ד׳</span>
+<span class="text-[11px] font-bold text-on-surface mt-1">סוכן פסיקה</span>
+<span class="text-[10px] text-primary">אישור כדאיות סופית</span>
+</div>
+</div>
+</div>
+<!-- Execution Link & Actions -->
+<div class="pt-space-xs flex flex-col gap-space-sm border-t border-outline-variant">
+<div class="flex items-center justify-between text-label-sm p-space-xs rounded bg-surface-container-lowest border border-outline-variant/60">
+<span class="text-on-surface-variant">קישור לפעולה מקושרת:</span>
+<a class="text-primary hover:underline font-mono font-bold flex items-center gap-1" href="#">
+<span>רישום מדומה SIM-9941</span>
+<span class="material-symbols-outlined text-sm" data-icon="open_in_new">open_in_new</span>
+</a>
+</div>
+<!-- Cryptographic JSON Export Button -->
+<button class="w-full py-2.5 px-space-md rounded-lg bg-primary hover:bg-primary-fixed text-on-primary font-title font-bold flex items-center justify-center gap-space-xs shadow transition-colors active:scale-[0.98]">
+<span class="material-symbols-outlined text-title" data-icon="lock_reset">lock_reset</span>
+<span>ייצוא נתוני אירוע (JSON חתום קריפטוגרפית)</span>
+</button>
+</div>
+</section>
+</div>
+</main>
+</div>
+</div>
+<!-- Light Vanilla Script for Context Switching & Micro-Interactions -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Interactive chip selection effect
+      const chips = document.querySelectorAll('button[class*="rounded-full"]');
+      chips.forEach(chip => {
+        chip.addEventListener('click', () => {
+          chips.forEach(c => {
+            c.classList.remove('bg-primary-container', 'text-on-primary-container', 'font-bold');
+            c.classList.add('bg-surface-container-high', 'text-on-surface-variant');
+          });
+          chip.classList.add('bg-primary-container', 'text-on-primary-container', 'font-bold');
+          chip.classList.remove('bg-surface-container-high', 'text-on-surface-variant');
+        });
+      });
+    });
+  </script>
+</body></html>
