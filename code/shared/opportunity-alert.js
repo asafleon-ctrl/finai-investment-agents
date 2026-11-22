@@ -63,18 +63,31 @@
     });
   }
 
-  /* ---------- sound: "cha-ching" synthesized with Web Audio ---------- */
+  /* ---------- sound: "קצ'ינגגג" – קופה רושמת, מסונתז ב-Web Audio ---------- */
   var ctx = null;
   function audio() {
     if (!ctx) {
       var AC = window.AudioContext || window.webkitAudioContext;
       if (!AC) return null;
-      ctx = new AC();
+      try { ctx = new AC(); } catch (e) { return null; }
     }
     return ctx;
   }
-  // דפדפנים חוסמים צליל עד לאינטראקציה ראשונה – פותחים את ההקשר בלחיצה הראשונה.
-  var pendingSoundUntil = 0; // התראה הגיעה לפני שהצליל אופשר – נשמיע בלחיצה הבאה
+  // יוצרים את ההקשר כבר בטעינה: אם המשתמש לחץ בעמוד קודם באתר, הדפדפן מתיר צליל מיד.
+  audio();
+
+  // האם הדפדפן מתיר כרגע צליל בלי לחיצה נוספת
+  function soundAllowed() {
+    try {
+      if (navigator.getAutoplayPolicy) return navigator.getAutoplayPolicy('audiocontext') === 'allowed';
+    } catch (e) { /* ignore */ }
+    var c = audio();
+    return !!c && c.state === 'running';
+  }
+
+  // דפדפנים חוסמים צליל עד לאינטראקציה ראשונה בעמוד. בלחיצה הראשונה פותחים את ההקשר.
+  var pendingSoundUntil = 0;     // התראה הגיעה לפני שהצליל אופשר – נשמיע בלחיצה הבאה
+  var onUnlock = [];
   function unlock() {
     var c = audio();
     if (!c) return;
@@ -84,64 +97,115 @@
         pendingSoundUntil = 0;
         playCashSound();
       }
+      var q = onUnlock; onUnlock = [];
+      q.forEach(function (fn) { fn(); });
     });
   }
   ['pointerdown', 'keydown', 'touchstart'].forEach(function (ev) {
     window.addEventListener(ev, unlock, { capture: true, passive: true });
   });
+  function whenSoundAllowed(fn) {
+    if (soundAllowed()) fn(); else onUnlock.push(fn);
+  }
   function audioReady() { return !!ctx && ctx.state === 'running'; }
 
-  function bell(c, out, t, freq, dur, gain) {
-    // פעמון: תדר יסוד + עליונים לא-הרמוניים, דעיכה מהירה
-    [[1, 1], [2.76, 0.45], [5.4, 0.22], [8.93, 0.1]].forEach(function (p) {
-      var o = c.createOscillator();
-      var g = c.createGain();
-      o.type = 'sine';
-      o.frequency.value = freq * p[0];
-      g.gain.setValueAtTime(0.0001, t);
-      g.gain.exponentialRampToValueAtTime(gain * p[1], t + 0.005);
-      g.gain.exponentialRampToValueAtTime(0.0001, t + dur / p[0] * 1.5);
-      o.connect(g).connect(out);
-      o.start(t);
-      o.stop(t + dur + 0.05);
-    });
-  }
-  function click(c, out, t, gain) {
-    // "קליק" של מגירת קופה: פרץ רעש קצר מסונן
-    var len = Math.floor(c.sampleRate * 0.04);
+  function noiseBuffer(c, seconds) {
+    var len = Math.floor(c.sampleRate * seconds);
     var buf = c.createBuffer(1, len, c.sampleRate);
     var d = buf.getChannelData(0);
-    for (var i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 3);
+    for (var i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
+    return buf;
+  }
+  function env(g, t, peak, attack, decay) {
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(peak, t + attack);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + attack + decay);
+  }
+  function noiseHit(c, out, t, type, freq, q, peak, decay) {
     var src = c.createBufferSource();
-    src.buffer = buf;
+    src.buffer = noiseBuffer(c, decay + 0.05);
     var f = c.createBiquadFilter();
-    f.type = 'bandpass';
-    f.frequency.value = 2500;
+    f.type = type; f.frequency.value = freq; f.Q.value = q;
     var g = c.createGain();
-    g.gain.value = gain;
+    env(g, t, peak, 0.002, decay);
     src.connect(f).connect(g).connect(out);
     src.start(t);
   }
+  function tone(c, out, t, freq, type, peak, attack, decay, detuneCents) {
+    var o = c.createOscillator();
+    var g = c.createGain();
+    o.type = type;
+    o.frequency.value = freq;
+    if (detuneCents) o.detune.value = detuneCents;
+    env(g, t, peak, attack, decay);
+    o.connect(g).connect(out);
+    o.start(t);
+    o.stop(t + attack + decay + 0.05);
+  }
+
+  // "קַ" – לחיצת מקש וקפיצת ידית הקופה: נקישה מתכתית + חבטה נמוכה
+  function ka(c, out, t) {
+    noiseHit(c, out, t, 'bandpass', 1800, 1.2, 0.9, 0.035);
+    tone(c, out, t, 140, 'sine', 0.7, 0.002, 0.07);
+    noiseHit(c, out, t + 0.055, 'bandpass', 3200, 2, 0.6, 0.03); // תפס המגירה
+    tone(c, out, t + 0.055, 95, 'triangle', 0.5, 0.002, 0.09);
+  }
+
+  // "צ'ינגגג" – פעמון הקופה: "צ'" רעשי חד ואז פעמון מתכתי עם צלצול ארוך ורוטט
+  function ching(c, out, t) {
+    noiseHit(c, out, t, 'highpass', 6000, 0.7, 0.55, 0.09);   // צ'
+    var f0 = 2350;
+    // עליונים של פעמון קטן (יחסים לא-הרמוניים), כל אחד בזוג מעט מכוון-לא-נכון ליצירת "גגג" רוטט
+    [[1, 0.55, 1.9], [1.5, 0.22, 1.2], [2.0, 0.28, 1.4], [2.76, 0.16, 0.8], [3.76, 0.09, 0.5], [5.4, 0.05, 0.3]]
+      .forEach(function (p) {
+        tone(c, out, t + 0.012, f0 * p[0], 'sine', p[1], 0.003, p[2], -6);
+        tone(c, out, t + 0.012, f0 * p[0], 'sine', p[1] * 0.8, 0.003, p[2] * 0.9, 7);
+      });
+    // גוף נמוך יותר שנותן "בשר" לצלצול
+    tone(c, out, t + 0.012, f0 / 2, 'triangle', 0.12, 0.004, 0.6);
+  }
+
+  // מטבעות שמתגלגלים במגירה
   function coins(c, out, t) {
-    // צלצול מטבעות קטן אחרי הפעמון
-    for (var i = 0; i < 6; i++) {
-      bell(c, out, t + i * 0.045 + Math.random() * 0.02, 3200 + Math.random() * 1800, 0.12, 0.05);
+    for (var i = 0; i < 9; i++) {
+      var tt = t + i * 0.055 + Math.random() * 0.03;
+      var f = 4200 + Math.random() * 2600;
+      var peak = 0.12 * (1 - i / 11);
+      tone(c, out, tt, f, 'sine', peak, 0.002, 0.09 + Math.random() * 0.08);
+      tone(c, out, tt, f * 1.48, 'sine', peak * 0.4, 0.002, 0.06);
+      noiseHit(c, out, tt, 'highpass', 7000, 0.7, peak * 0.6, 0.02);
     }
   }
+
   function playCashSound() {
     if (read(MUTE_KEY, false)) return false;
     var c = audio();
     if (!c) return false;
     if (c.state === 'suspended') c.resume();
     if (c.state !== 'running') return false;
+
     var master = c.createGain();
-    master.gain.value = 0.35;
-    master.connect(c.destination);
+    master.gain.value = 0.5;
+    var comp = c.createDynamicsCompressor();
+    comp.threshold.value = -14; comp.ratio.value = 4;
+    master.connect(comp).connect(c.destination);
+
+    // מרחב קטן: השהיה קצרה עם משוב, כדי שהצלצול "יימרח" כמו בחדר
+    var delay = c.createDelay(0.5);
+    delay.delayTime.value = 0.09;
+    var fb = c.createGain(); fb.gain.value = 0.28;
+    var lp = c.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 5000;
+    var wet = c.createGain(); wet.gain.value = 0.35;
+    var bus = c.createGain();
+    bus.connect(master);
+    bus.connect(delay);
+    delay.connect(lp).connect(fb).connect(delay);
+    lp.connect(wet).connect(master);
+
     var t = c.currentTime + 0.02;
-    click(c, master, t, 0.9);              // צ׳-
-    bell(c, master, t + 0.06, 1318.5, 0.35, 0.35); // -צ׳ינג (E6)
-    bell(c, master, t + 0.17, 1760, 0.9, 0.45);    // (A6) צלצול ארוך
-    coins(c, master, t + 0.3);
+    ka(c, bus, t);              // קַ
+    ching(c, bus, t + 0.13);    // צ'ינגגג
+    coins(c, bus, t + 0.32);    // מטבעות
     return true;
   }
 
@@ -363,20 +427,25 @@
   };
 
   /* ---------- demo trigger ----------
-   * ?demo-alert בכתובת – מציג התראת הדגמה מיד.
-   * בדף הבית – התראת הדגמה אחת לכל סשן, 5 שניות אחרי הטעינה.
+   * ?demo-alert בכתובת – התראת הדגמה.
+   * בדף הבית – התראת הדגמה אחת לכל סשן.
+   * כדי שהצליל יישמע בדיוק כשההתראה קופצת, ההדגמה ממתינה עד שהדפדפן מתיר צליל
+   * (מיד אם כבר לחצו בעמוד קודם באתר; אחרת אחרי הלחיצה הראשונה בעמוד).
    */
+  function demoWithSound(delayMs) {
+    setTimeout(function () {
+      whenSoundAllowed(function () { setTimeout(demo, 1200); });
+    }, delayMs);
+  }
   function boot() {
     var params = new URLSearchParams(location.search);
-    if (params.has('demo-alert')) { demo(); return; }
+    if (params.has('demo-alert')) { demoWithSound(300); return; }
     if (/02-home/.test(location.pathname)) {
       var seen = false;
       try { seen = sessionStorage.getItem(DEMO_KEY) === '1'; } catch (e) { /* ignore */ }
       if (!seen) {
-        setTimeout(function () {
-          try { sessionStorage.setItem(DEMO_KEY, '1'); } catch (e) { /* ignore */ }
-          demo();
-        }, 5000);
+        try { sessionStorage.setItem(DEMO_KEY, '1'); } catch (e) { /* ignore */ }
+        demoWithSound(3800);
       }
     }
   }
