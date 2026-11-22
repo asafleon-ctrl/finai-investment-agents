@@ -40,9 +40,11 @@
   function write(key, value) {
     try { localStorage.setItem(key, JSON.stringify(value)); } catch (e) { /* ignore */ }
   }
-  function logStatus(alert, status) {
+  function logStatus(alert, status, extra) {
     var log = read(LOG_KEY, []);
-    log.push({ id: alert.id, version: alert.version, status: status, at: new Date().toISOString() });
+    var entry = { id: alert.id, version: alert.version, status: status, at: new Date().toISOString() };
+    if (extra) Object.keys(extra).forEach(function (k) { entry[k] = extra[k]; });
+    log.push(entry);
     write(LOG_KEY, log.slice(-200));
   }
 
@@ -232,6 +234,15 @@
     '.finai-btn:focus-visible{outline:2px solid #4edea3;outline-offset:2px}',
     '.finai-btn-primary{background:#10b981;border-color:#10b981;color:#00422b}',
     '.finai-btn-primary:hover{background:#4edea3}',
+    '.finai-btn-reject{color:#ffb4ab;border-color:rgba(255,180,171,.4)}',
+    '.finai-btn-reject:hover{background:rgba(147,0,10,.25)}',
+    '.finai-reject{margin-block-start:12px;padding-block-start:12px;border-block-start:1px solid #3c4a42}',
+    '.finai-reject[hidden]{display:none}',
+    '.finai-reject-title{font-size:13px;font-weight:600;margin:0 0 8px}',
+    '.finai-reasons{border:0;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;font-size:13px}',
+    '.finai-reasons label{display:flex;align-items:center;gap:8px;cursor:pointer}',
+    '.finai-reasons input{accent-color:#10b981}',
+    '.finai-done{font-size:13px;line-height:1.5;color:#bbcabf}',
     '.finai-icon-btn{font:inherit;background:none;border:0;color:#bbcabf;cursor:pointer;padding:2px;border-radius:4px;line-height:0}',
     '.finai-icon-btn:hover{color:#fff}',
     '.finai-icon-btn:focus-visible{outline:2px solid #4edea3}',
@@ -330,6 +341,22 @@
       '<div class="finai-actions">' +
         '<button type="button" class="finai-btn finai-btn-primary" data-act="open">לצפייה בהמלצה</button>' +
         '<button type="button" class="finai-btn" data-act="later">אחר כך</button>' +
+        '<button type="button" class="finai-btn finai-btn-reject" data-act="reject" aria-expanded="false">דחיית ההצעה</button>' +
+      '</div>' +
+      '<div class="finai-reject" hidden>' +
+        '<p class="finai-reject-title">למה לדחות? (אופציונלי)</p>' +
+        '<fieldset class="finai-reasons"><legend class="sr-only" style="position:absolute;inline-size:1px;block-size:1px;overflow:hidden;clip:rect(0 0 0 0)">סיבת הדחייה</legend>' +
+          '<label><input type="radio" name="reason-' + esc(alert.id) + '" value="high_risk">סיכון גבוה</label>' +
+          '<label><input type="radio" name="reason-' + esc(alert.id) + '" value="liquidity_need">צורך בנזילות</label>' +
+          '<label><input type="radio" name="reason-' + esc(alert.id) + '" value="wrong_horizon">טווח לא מתאים</label>' +
+          '<label><input type="radio" name="reason-' + esc(alert.id) + '" value="other">סיבה אחרת</label>' +
+        '</fieldset>' +
+        '<div class="finai-note">דחייה אינה משנה מגבלות סיכון, תקציב או מדיניות, ואינה מבצעת עסקה. אפשר לדלג על המשוב.</div>' +
+        '<div class="finai-actions">' +
+          '<button type="button" class="finai-btn finai-btn-reject" data-act="reject-confirm">דחייה</button>' +
+          '<button type="button" class="finai-btn" data-act="reject-skip">דחייה בלי משוב</button>' +
+          '<button type="button" class="finai-btn" data-act="reject-cancel">ביטול</button>' +
+        '</div>' +
       '</div>';
 
     function dismiss() {
@@ -348,6 +375,20 @@
         var url = RECOMMENDATION_URL + '?rec=' + encodeURIComponent(alert.id) + '&v=' + encodeURIComponent(alert.version);
         if (/03-recommendation\.html$/.test(location.pathname)) dismiss();
         else location.href = url;
+      } else if (act === 'reject' || act === 'reject-cancel') {
+        var panel = el.querySelector('.finai-reject');
+        var open = act === 'reject';
+        panel.hidden = !open;
+        el.querySelector('[data-act="reject"]').setAttribute('aria-expanded', String(open));
+        if (open) { var first = panel.querySelector('input'); if (first) first.focus(); }
+      } else if (act === 'reject-confirm' || act === 'reject-skip') {
+        var chosen = el.querySelector('.finai-reasons input:checked');
+        var reason = act === 'reject-confirm' && chosen ? chosen.value : null;
+        // נרשם כ"נדחתה" בלבד: לא נפתחה לביצוע, לא בוצעה, ואין שינוי במגבלות
+        logStatus(alert, 'rejected', { reason: reason });
+        bumpBell(-1);
+        el.innerHTML = '<div class="finai-done" role="status">ההצעה נדחתה. לא בוצעה עסקה ולא שונו מגבלות או מדיניות.</div>';
+        setTimeout(dismiss, 2600);
       } else if (act === 'later' || act === 'close') {
         dismiss(); // נשאר לא נקרא בפעמון ובמרכז ההתראות
       } else if (act === 'mute') {
